@@ -4,7 +4,7 @@
  */
 package servlets;
 
-import controllers.Group_DML;
+import dao.GroupModule;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 /**
@@ -27,10 +28,17 @@ public class AddGroupServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			String[] student_ids = request.getParameterValues("student_ids");
-			
 			String gid = request.getParameter("gid");
 			
-			Group_DML.addPeople(student_ids,gid);
+			objectClasses.Person user = (objectClasses.Person) request.getSession(false).getAttribute("user");
+			
+			objectClasses.Group g = null;
+			if (!"new".equals(gid))g=GroupModule.getGroup(gid);
+			if (g==null) {
+				String title = request.getParameter("group-title");
+				g=GroupModule.createGroup(title,user.getId());
+			}
+			GroupModule.addMembersToGroup(student_ids,g);
 		} finally {
 			out.close();
 		}

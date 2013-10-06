@@ -5,19 +5,18 @@
 package objectClasses;
 
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.List;
 
 /**
  *
  * @author SeiJee
  */
-public abstract class Person {
+public class Person {
 	protected String id, password;
 	protected String gender,father_name, mother_name, bloodgroup,
 	p_address, r_address, mobile,email, type, photo,Name;
 	protected Calendar DOB;
-	protected HashSet<Group> groups;
+	protected List<Group> groups;
 	public String display_pic;
 	
 	public String getName() {
@@ -144,11 +143,11 @@ public abstract class Person {
 		this.password = password;
 	}
 
-	public HashSet<Group> getGroups() {
+	public List<Group> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(HashSet<Group> groups) {
+	public void setGroups(List<Group> groups) {
 		this.groups = groups;
 	}
 	

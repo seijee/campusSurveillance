@@ -7,6 +7,7 @@ package objectClasses;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  *
@@ -61,8 +62,8 @@ public class Student extends Person {
 	
 	
 	@Override
-	public HashSet<Group> getGroups() {
-		groups = controllers.ConPerson.getGroups(this);
+	public List<Group> getGroups() {
+		groups = dao.GroupModule.getAlliedGroups(this);
 		return groups;
 	}
 	

@@ -8,10 +8,6 @@ package objectClasses;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -19,8 +15,9 @@ import org.hibernate.Transaction;
  */
 public class Group implements Serializable {
 	private Long group_id;
-	private Set<Person> people = new HashSet<Person>();
-	private String Title;
+	//private Person owner;
+	private Set<Person> people =  new HashSet <Person>();
+	private String Title, owner;
 
 	public Long getGroup_id() {
 		return group_id;
@@ -45,23 +42,12 @@ public class Group implements Serializable {
 		this.people = people;
 	}
 
-	
-	
-	public void addPeople(Set<Person> personset) {
-		SessionFactory sf = controllers.conn.getSf();
-		Session session = sf.openSession();
-		Transaction t = session.beginTransaction();
-		Query query = session.createSQLQuery("DELETE FROM people_group where groupid = '"+this.group_id+"'");
-		//int executeUpdate = query.executeUpdate();
-		for (Person p : personset){
-			query = session.createSQLQuery("INSERT INTO people_group VALUES(?,?)");
-			query.setLong(0, group_id);
-			query.setString(1, p.getId());
-			query.executeUpdate();
-		}
-		t.commit();
-		this.people = personset;
-		session.close();
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 }

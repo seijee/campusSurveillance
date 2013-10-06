@@ -109,7 +109,7 @@ public class AddViaXLS extends HttpServlet {
 
 					File file = new File(new File(_uploadDir), fileItem.getName());
 					fileItem.write(file);
-					List<Student> s = controllers.Excel.ImportStudents(file);
+					List<Student> s = dao.Excel.ImportStudents(file);
 					request.setAttribute("newStudents", s);
 					
 					RequestDispatcher dispatcher = request.getRequestDispatcher("./addStudent.jsp");

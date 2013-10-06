@@ -76,7 +76,7 @@ public class AdminServe extends HttpServlet {
 		a.setDesignation(request.getParameter("designation"));
 		a.setQualifications(request.getParameter("qualification"));
 
-		return controllers.ConAdmin.addNewAdmin(a);
+		return dao.NewUserModule.addNewAdmin(a);
 	}
 
 	private boolean addFaculty (HttpServletRequest request, HttpServletResponse response){
@@ -107,11 +107,11 @@ public class AdminServe extends HttpServlet {
 		 f.setFacultyId("fac_"+f.getName());
 		 String dc = request.getParameter("department");
 
-		 f.setDepartment(academics.zAccess.getDepartment(dc));
+		 //f.setDepartment(academics.zAccess.getDepartment(dc));
 		 f.setQualification(null);
 		 f.setDesignation(request.getParameter("designation"));
 
-		 return  controllers.ConFaculty.addNewFaculty(f);	
+		 return  dao.NewUserModule.addNewFaculty(f);	
 	}
 	
 	private boolean addStudent (HttpServletRequest request, HttpServletResponse response){
@@ -150,9 +150,9 @@ public class AdminServe extends HttpServlet {
 				s.setBatch(batch[i]);
 				s.setSemester(Integer.parseInt(semester[i]));
 				s.setBranch(branch[i]);
-				
+				s.setPassword("aaa");
 			
-				added = controllers.ConStudent.addNewStudent(s);
+				added = dao.NewUserModule.addNewStudent(s);
 				if (added){
 					out.println(s.getId()+" ["+s.getName()+"] added!!<br/>");
 				}

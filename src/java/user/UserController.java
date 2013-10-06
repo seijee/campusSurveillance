@@ -30,7 +30,7 @@ public class UserController {
 			p.setName("rootAdmin");
 			p.setType("GodMode");
 			p.setPassword("initialize");
-			controllers.ConAdmin.addNewAdmin((Admin)p);
+			dao.NewUserModule.addNewAdmin((Admin)p);
 		}else{
 			q = "FROM Person WHERE id = :uid AND password=:pw";
 
@@ -44,7 +44,6 @@ public class UserController {
 				p = (Person)r.get(0);
 			}
 		}
-		
 		return p;
 	}
 }

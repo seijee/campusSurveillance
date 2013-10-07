@@ -5,7 +5,7 @@
 package dao;
 
 import java.util.List;
-import objectClasses.Person;
+import objectClasses.people.Person;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

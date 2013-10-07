@@ -3,13 +3,13 @@
     Created on : Sep 14, 2013, 12:39:22 AM
     Author     : SeiJee
 --%>
-<%@page import="objectClasses.Person"%>
+<%@page import="objectClasses.people.Person"%>
 <%
 response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
 response.setHeader("Pragma", "no-cache");
 	Person user = (Person)session.getAttribute("user");
 	if (user==null) response.sendRedirect(".SignOut");
-	if (!user.getClass().equals(objectClasses.Faculty.class)) response.sendRedirect("unAuthorisedAccess");
+	if (!user.getClass().equals(objectClasses.people.Faculty.class)) response.sendRedirect("unAuthorisedAccess");
 %>
 
 

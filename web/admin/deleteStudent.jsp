@@ -4,12 +4,12 @@
     Author     : SeiJee
 --%>
 
-<%@page import="objectClasses.Student"%>
+<%@page import="objectClasses.people.*"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	List<String> students = controllers.Student_DRL.getStudentIds();
+	List<Person> students = dao.GroupModule.getPeople();
 %>
 <html>
     <head>
@@ -22,8 +22,8 @@
 				<tr>
 					<td>
 						<select name="sid">
-							<% for(String id : students){ %>
-							<option value="<%= id %>"><%= id %></option>
+							<% for(Person id : students){ %>
+							<option value="<%= id.getId() %>"><%= id.getName() %></option>
 							<% } %>
 						</select>
 					</td>

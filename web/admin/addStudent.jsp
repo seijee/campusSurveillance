@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.util.Locale"%>
-<%@page import="objectClasses.Person"%>
+<%@page import="objectClasses.people.Person"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Collection"%>
@@ -13,7 +13,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="objectClasses.Student"%>
+<%@page import="objectClasses.people.Student"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -1,13 +1,14 @@
+
 <%@page import="java.util.Set"%>
 <%@page import="objectClasses.Group"%>
-<%@page import="objectClasses.Person"%>
+<%@page import="objectClasses.people.Person"%>
 <%@page import="java.util.List"%>
 <!doctype html>
 <html lang="en">
 <%
 Person user = (Person)session.getAttribute("user");
 if (user==null) response.sendRedirect(".SignOut");
-List<Person> people = dao.ConPerson.getPeople();
+List<Person> people = dao.GroupModule.getPeople();
 %>
 <!-- currently lists all registered students and 
 facilitates to add them into an existing group or create a new group with selected students -->

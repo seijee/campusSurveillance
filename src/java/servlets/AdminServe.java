@@ -18,9 +18,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import objectClasses.Admin;
-import objectClasses.Faculty;
-import objectClasses.Student;
+import objectClasses.people.Admin;
+import objectClasses.people.Faculty;
+import objectClasses.people.Student;
 
 /**
  *

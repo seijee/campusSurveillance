@@ -17,7 +17,7 @@ import org.hibernate.Transaction;
 public class NewUserModule {
 	private static SessionFactory sf = conn.getSf();
 	
-	public static boolean addNewAdmin(objectClasses.Admin newAdmin){
+	public static boolean addNewAdmin(objectClasses.people.Admin newAdmin){
 		Session session = sf.openSession();
 		Transaction t=null;
 		try {
@@ -33,7 +33,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	public static boolean addNewFaculty (objectClasses.Faculty f){
+	public static boolean addNewFaculty (objectClasses.people.Faculty f){
 		Session session = sf.openSession();
 		Transaction t = null;
 		try {
@@ -49,7 +49,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	public static boolean addNewStudent(objectClasses.Student s) {
+	public static boolean addNewStudent(objectClasses.people.Student s) {
 		Session session = sf.openSession();
 		Transaction t = null;
 		try {
@@ -65,7 +65,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	/*Not yet implemented*/public static boolean addNewStudentBatch(List<objectClasses.Student> studenList){
+	/*Not yet implemented*/public static boolean addNewStudentBatch(List<objectClasses.people.Student> studenList){
 		//NOT TESTED, NOT RELIABLE, DO NOT USE
 		//implements batch processing, which is faster
 		//should work well with save, may crash with update operations.
@@ -74,7 +74,7 @@ public class NewUserModule {
 		try {
 			t = session.beginTransaction();
 			int count=0;
-			for (objectClasses.Student s : studenList){
+			for (objectClasses.people.Student s : studenList){
 				session.saveOrUpdate(s);
 				if (++count%50 == 0){
 					session.flush();

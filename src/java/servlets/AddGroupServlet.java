@@ -30,7 +30,7 @@ public class AddGroupServlet extends HttpServlet {
 			String[] student_ids = request.getParameterValues("student_ids");
 			String gid = request.getParameter("gid");
 			
-			objectClasses.Person user = (objectClasses.Person) request.getSession(false).getAttribute("user");
+			objectClasses.people.Person user = (objectClasses.people.Person) request.getSession(false).getAttribute("user");
 			
 			objectClasses.Group g = null;
 			if (!"new".equals(gid))g=GroupModule.getGroup(gid);

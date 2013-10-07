@@ -4,10 +4,7 @@
     Author     : SeiJee
 --%>
 
-<%@page import="objectClasses.Faculty"%>
-<%@page import="objectClasses.Admin"%>
-<%@page import="objectClasses.Student"%>
-<%@page import="objectClasses.Person"%>
+<%@page import="objectClasses.people.*"%>
 <%@page import="user.UserController"%>
 <%@page import="java.util.Set"%>
 

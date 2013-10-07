@@ -6,8 +6,8 @@ package user;
 
 
 import java.util.List;
-import objectClasses.Admin;
-import objectClasses.Person;
+import objectClasses.people.Admin;
+import objectClasses.people.Person;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,12 +24,12 @@ public class UserController {
 		String q;
 		Person p=null;
 		Query query=null;
-		if ("root".equals(uid) && "initialize".equals(pw)){
+		if ("root".equals(uid) && "init".equals(pw)){
 			p = new Admin();
 			p.setId("root");
 			p.setName("rootAdmin");
 			p.setType("GodMode");
-			p.setPassword("initialize");
+			p.setPassword("init");
 			dao.NewUserModule.addNewAdmin((Admin)p);
 		}else{
 			q = "FROM Person WHERE id = :uid AND password=:pw";

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="objectClasses.Person" table="people">
+  <class name="objectClasses.people.Person" table="people">
     <id column="person_id" name="id">
       <generator class="assigned"/>
     </id>
@@ -17,41 +17,37 @@
     <property name="p_address"/>
     <property name="r_address"/>
     <property column="type" name="type"/>
-    <joined-subclass name="objectClasses.Admin" table="administration">
+    <joined-subclass name="objectClasses.people.Admin" table="administration">
       <key column="admin_id"/>
       <property column="qualifications" name="qualifications"/>
       <property name="designation"/>
       <property column="join_date" name="join_date" type="calendar_date"/>
     </joined-subclass>
-    <joined-subclass name="objectClasses.Student" table="students">
+    <joined-subclass name="objectClasses.people.Student" table="students">
       <key column="student_id"/>
       <property name="category"/>
       <property name="batch"/>
       <property name="semester"/>
       <property name="branch"/>
     </joined-subclass>
-    <joined-subclass name="objectClasses.Faculty" table="faculties">
+    <joined-subclass name="objectClasses.people.Faculty" table="faculties">
       <key column="faculty_id"/>
       <property name="department"/>
       <property name="designation"/>
       <property name="qualification"/>
       <property name="join_date" type="calendar_date"/>
     </joined-subclass>
-	
   </class>
   <class name="objectClasses.Group" table="groups">
     <id name="group_id">
       <generator class="increment"/>
     </id>
-    <property name="Title" not-null="false"/>
+    <property name="Title" not-null="true"/>
     <property name="owner" not-null="true"/>
-	
-    <set cascade="save-update" inverse="true" lazy="true" name="people" table="people_group" fetch="select">
-	  <key column="group_id"/>
-	  <many-to-many class="objectClasses.Person" column="Name" />
-      <many-to-many class="objectClasses.Person"  column="person_id"/>
+    <set cascade="save-update" fetch="select" inverse="true" lazy="true" name="people" table="people_group">
+      <key column="group_id"/>
+      <many-to-many class="objectClasses.people.Person" column="person_id"/>
     </set>
-	
   </class>
   <class name="objectClasses.Department" table="departments">
     <id name="departmentCode">

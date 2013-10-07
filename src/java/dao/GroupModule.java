@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import objectClasses.Group;
-import objectClasses.Person;
+import objectClasses.people.Person;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -150,7 +150,7 @@ public class GroupModule {
 				+ "WHERE owner =:id");
 		q.setParameter("id", pid);
 		List<Group> groups = q.list();
-		//HashSet<Group> groups = new HashSet<Group>();
+		session.close();
 		return groups;
 	}
 	

@@ -1,0 +1,71 @@
+	body{
+		width:100%;
+		margin:0px;
+		padding:0px;
+	}
+	#header{
+		width:100%;
+		background: black;
+		position:fixed;
+		height:10%;
+		top:0px;
+	}
+	#header a{
+		float: left;
+		text-decoration:none;
+		color: white;
+		padding:5px;
+		margin-left: 5px;
+	}
+	#header a:hover{
+		background: red;
+	}
+	.horizontal {
+		list-style-type: none;
+		padding:0px;
+		margin: 0px;
+	}
+	#topbar{
+		position: absolute;
+		bottom:0px;
+		background:#AAAAAA;
+		width:100%;
+	}
+	
+	
+	#middle{
+		position: fixed;
+		top:10%;
+		width:100%;
+		height:85%;
+		overflow-y: scroll;
+	}
+	
+	#taskbar{
+		width:12%;
+		position:fixed;
+		left:0px;
+		height: 100%;
+		background: white;
+		text-align:center;
+	}
+	
+	#content{
+		position:absolute;
+		margin-left:12%;
+		padding: 15px;
+		max-width:70%;
+	}
+	#rightbar{
+		position:absolute;
+		right:0px;
+		width:10%;
+		background:#AAFFAA;
+	}
+	
+	#footer{
+		height: 50px;
+		width:100%;
+		position:fixed;
+		bottom:0px;
+	}

@@ -23,6 +23,9 @@ public class Admin extends Person {
 		this.qualifications = qualifications;
 		this.join_date = join_date;
 	}
+
+	public Admin() {
+	}
 	
 	public void setAdminId(String aid){
 		aid = this.email;

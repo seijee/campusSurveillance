@@ -58,7 +58,9 @@ facilitates to add them into an existing group or create a new group with select
 	}
 	</style>
 	<script>
-	var people = [<% for (Person p : people){%>"<%=p.getId() %>",<% } %>];
+	var people = [
+	<% for (Person p : people){%>"<%=p.getId() %>",<% } %>
+		];
 		
 	$(function() {
 		$( "#selectable" ).selectable({

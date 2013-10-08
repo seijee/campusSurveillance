@@ -12,7 +12,14 @@ public class Department implements Serializable {
 		this.HOD = HOD;
 	}
 
-	
+	public String getHOD() {
+		return HOD;
+	}
+
+	public void setHOD(String HOD) {
+		this.HOD = HOD;
+	}
+
 	public String getDepartmentCode() {
 		return departmentCode;
 	}

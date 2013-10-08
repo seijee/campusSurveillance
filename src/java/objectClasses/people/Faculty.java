@@ -28,6 +28,9 @@ public class Faculty extends Person {
 		this.department = department;
 		this.join_date = join_date;
 	}
+
+	public Faculty() {
+	}
 	
 	public void setFacultyId(String id){
 		id = "fac_"+Name;

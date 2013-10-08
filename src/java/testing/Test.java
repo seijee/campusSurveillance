@@ -20,7 +20,7 @@ import objectClasses.people.Student;
  */
 public class Test {
 	public static void main(String[] args) throws Exception {
-		Faculty f = new Faculty();
+		Faculty f = new Faculty(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		Department d = new Department("CS", "Computer Science", "");
 	}
 	

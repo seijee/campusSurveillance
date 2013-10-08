@@ -12,4 +12,12 @@
     <property column="totalLectures" name="lecturesHeld"/>
     <property name="updatedOn" type="calendar"/>
   </class>
+  <class name="objectClasses.Department" table="departments">
+    <id name="departmentCode">
+      <generator class="assigned"/>
+    </id>
+    <property name="title" unique="true"/>
+	<property name="HOD" />
+	
+  </class>
 </hibernate-mapping>

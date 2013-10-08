@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import objectClasses.Group;
 import objectClasses.people.Admin;
 import objectClasses.people.Faculty;
 import objectClasses.people.Student;
@@ -51,67 +53,67 @@ public class AdminServe extends HttpServlet {
 	}
 
 	private boolean addNewAdmin (HttpServletRequest request, HttpServletResponse response){
-		Admin a = new Admin();
-		Calendar d = Calendar.getInstance();
-		a.setJoin_date(d);
-		d = Calendar.getInstance();
+		
 		int year = Integer.parseInt(request.getParameter("year"));
 		int month = Integer.parseInt(request.getParameter("month"));
 		int date = Integer.parseInt(request.getParameter("date"));
-		d.set(year, month, date);
 		
-		a.setName(request.getParameter("name"));
-		a.setGender(request.getParameter("gender"));
-		a.setDOB(d);
-		a.setMobile(request.getParameter("mobile"));
-		a.setEmail(request.getParameter("email"));
-		a.setFather_name(request.getParameter("father"));
-		a.setMother_name(request.getParameter("mother"));
-		a.setBloodgroup(request.getParameter("bloodgroup"));
-		a.setR_address(request.getParameter("raddress"));
-
-		a.setType("admin");
-		a.setAdminId("");
-		a.setPassword("aaa");
-		a.setDesignation(request.getParameter("designation"));
-		a.setQualifications(request.getParameter("qualification"));
-
+		
+		String designation = request.getParameter("designation");
+		String qualifications = request.getParameter("qualification");
+		Calendar join_date = Calendar.getInstance();
+		String id = request.getParameter("email");
+		String password = "aaa";
+		String gender = request.getParameter("gender");
+		String father_name = request.getParameter("father_name");
+		String mother_name = request.getParameter("mother_name");
+		String bloodgroup = request.getParameter("bloodgroup"); 
+		String p_address = request.getParameter("p_address"); 
+		String r_address = request.getParameter("r_address"); 
+		String mobile = request.getParameter("mobile"); 
+		String email = request.getParameter("email"); 
+		String type = "admin"; 
+		String photo = "default.jpg"; 
+		String Name = request.getParameter("name"); 
+		Calendar DOB = new GregorianCalendar(year, month, date);
+		List<Group> groups=null;
+		String display_pic = "notShared.jpg";
+		
+		Admin a = new Admin(designation, qualifications, join_date, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+		
 		return dao.NewUserModule.addNewAdmin(a);
 	}
 
 	private boolean addFaculty (HttpServletRequest request, HttpServletResponse response){
-		Faculty f = new Faculty();
-
-		//setting general and contact details
-
-		 Calendar d = Calendar.getInstance();
-		 f.setJoin_date(d);
+		
 		 int year = Integer.parseInt(request.getParameter("year"));
 		 int month = Integer.parseInt(request.getParameter("month"));
 		 int date = Integer.parseInt(request.getParameter("date"));
-		 d.set(year, month, date);
-
-		 //person specific
-		 f.setName(request.getParameter("fname"));
-		 f.setGender(request.getParameter("gender"));
-		 f.setDOB(d);
-		 f.setMobile(request.getParameter("mobile"));
-		 f.setEmail(request.getParameter("email"));
-		 f.setFather_name(request.getParameter("father"));
-		 f.setMother_name(request.getParameter("mother"));
-		 f.setBloodgroup(request.getParameter("bloodgroup"));
-		 f.setR_address(request.getParameter("raddress"));
-		 f.setType("Faculty");
-
-		 //faculty specific
-		 f.setFacultyId("fac_"+f.getName());
-		 String dc = request.getParameter("department");
-
-		 //f.setDepartment(academics.zAccess.getDepartment(dc));
-		 f.setQualification(null);
-		 f.setDesignation(request.getParameter("designation"));
-
-		 return  dao.NewUserModule.addNewFaculty(f);	
+		 
+		String designation = request.getParameter("designation");
+		String qualifications = request.getParameter("qualification");
+		Calendar join_date = Calendar.getInstance();
+		String department = request.getParameter("department");
+		String id = request.getParameter("email");
+		String password = "aaa";
+		String gender = request.getParameter("gender");
+		String father_name = request.getParameter("father_name");
+		String mother_name = request.getParameter("mother_name");
+		String bloodgroup = request.getParameter("bloodgroup"); 
+		String p_address = request.getParameter("p_address"); 
+		String r_address = request.getParameter("r_address"); 
+		String mobile = request.getParameter("mobile"); 
+		String email = request.getParameter("email"); 
+		String type = "admin"; 
+		String photo = "default.jpg"; 
+		String Name = request.getParameter("name"); 
+		Calendar DOB = new GregorianCalendar(year, month, date);
+		List<Group> groups=null;
+		String display_pic = "notShared.jpg";
+		
+		Faculty f = new Faculty(qualifications, designation, department, join_date, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+		
+		return  dao.NewUserModule.addNewFaculty(f);	
 	}
 	
 	private boolean addStudent (HttpServletRequest request, HttpServletResponse response){
@@ -119,39 +121,53 @@ public class AdminServe extends HttpServlet {
 		boolean added=false;
 		try {
 			out = response.getWriter();
-			String[] id = request.getParameterValues("student_ids");
-			String[] name = request.getParameterValues("names");
-			String[] father = request.getParameterValues("father");
-			String[] mother = request.getParameterValues("mother");
-			String[] gender = request.getParameterValues("gender");
-			String[] dob = request.getParameterValues("dob");
-			String[] email = request.getParameterValues("email");
-			String[] mobile = request.getParameterValues("mobile");
-			String[] p_address = request.getParameterValues("per_address");
-			String[] category = request.getParameterValues("category");
-			String[] batch = request.getParameterValues("batch");
-			String[] semester = request.getParameterValues("semester");
-			String[] branch = request.getParameterValues("branch");
+			
+			String[] id_s = request.getParameterValues("email");
+			String[] gender_s = request.getParameterValues("gender");
+			String[] father_names_s = request.getParameterValues("father_name");
+			String[] mother_name_s = request.getParameterValues("mother_name");
+			String[] bloodgroup_s = request.getParameterValues("bloodgroup"); 
+			String[] p_address_s = request.getParameterValues("p_address"); 
+			String[] r_address_s = request.getParameterValues("r_address"); 
+			String[] mobile_s = request.getParameterValues("mobile"); 
+			String[] email_s = request.getParameterValues("email");  
+			String[] Name_s = request.getParameterValues("name"); 
+			
+			//Calendar DOB = new GregorianCalendar(year, month, date);
+			String[] year_s = request.getParameterValues("year");
+			String[] month_s = request.getParameterValues("month");
+			String[] date_s = request.getParameterValues("date");
+
 			Student s;
 			
-			for (int i=0; i<id.length; i++){
+			for (int i=0; i<id_s.length; i++){
+				int year=Integer.parseInt(year_s[i]);
+				int month=Integer.parseInt(month_s[i]);
+				int date=Integer.parseInt(date_s[i]);
+				//s = new Student();
+				String category=null;
+				String batch=null;
+				String branch=null;
+				int semester=0;
+				String id = id_s[i];
+				String password = "sss";
+				String gender = gender_s[i];
+				String father_name = father_names_s[i];
+				String mother_name = mother_name_s[i];
+				String bloodgroup = bloodgroup_s[i]; 
+				String p_address = p_address_s[i]; 
+				String r_address = r_address_s[i]; 
+				String mobile = mobile_s[i]; 
+				String email = email_s[i]; 
+				String type = "student"; 
+				String photo = "default.jpg"; 
+				String Name = Name_s[i]; 
+				Calendar DOB = new GregorianCalendar(year, month, date);
+				List<Group> groups=null;
+				String display_pic = "notShared.jpg";
 				
-				s = new Student();
-				s.setId(id[i]);
-				s.setName(name[i]);
-				s.setFather_name(father[i]);
-				s.setMother_name(mother[i]);
-				s.setGender(gender[i]);
-				s.setDOB(extractDate(dob[i]));
-				s.setEmail(email[i]);
-				s.setMobile(mobile[i]);
-				s.setP_address(p_address[i]);
-				s.setCategory(category[i]);
-				s.setBatch(batch[i]);
-				s.setSemester(Integer.parseInt(semester[i]));
-				s.setBranch(branch[i]);
-				s.setPassword("aaa");
-			
+				s=new Student(category, batch, branch, semester, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+				
 				added = dao.NewUserModule.addNewStudent(s);
 				if (added){
 					out.println(s.getId()+" ["+s.getName()+"] added!!<br/>");

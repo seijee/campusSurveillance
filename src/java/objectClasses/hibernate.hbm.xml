@@ -49,10 +49,5 @@
       <many-to-many class="objectClasses.people.Person" column="person_id"/>
     </set>
   </class>
-  <class name="objectClasses.Department" table="departments">
-    <id name="departmentCode">
-      <generator class="assigned"/>
-    </id>
-    <property name="title" unique="true"/>
-  </class>
+  
 </hibernate-mapping>

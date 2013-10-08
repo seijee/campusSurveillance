@@ -5,6 +5,7 @@
 package user;
 
 
+import java.util.Calendar;
 import java.util.List;
 import objectClasses.people.Admin;
 import objectClasses.people.Person;
@@ -25,10 +26,9 @@ public class UserController {
 		Person p=null;
 		Query query=null;
 		if ("root".equals(uid) && "init".equals(pw)){
-			p = new Admin();
+			p =new Admin("master", "isowner", null, "root", "init", null, null, null, null, null, null, null, null, "admin", "default.jpg", "rootAdmin", null, null, "notShared.jpg");
 			p.setId("root");
 			p.setName("rootAdmin");
-			p.setType("GodMode");
 			p.setPassword("init");
 			dao.NewUserModule.addNewAdmin((Admin)p);
 		}else{

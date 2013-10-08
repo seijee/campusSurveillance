@@ -4,8 +4,15 @@ package objectClasses;
 import java.io.Serializable;
 
 public class Department implements Serializable {
-	private String departmentCode, title;
+	private String departmentCode, title, HOD;
 
+	public Department(String departmentCode, String title, String HOD) {
+		this.departmentCode = departmentCode;
+		this.title = title;
+		this.HOD = HOD;
+	}
+
+	
 	public String getDepartmentCode() {
 		return departmentCode;
 	}

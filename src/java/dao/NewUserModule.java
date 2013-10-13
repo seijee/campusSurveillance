@@ -54,6 +54,7 @@ public class NewUserModule {
 		Transaction t = null;
 		try {
 			t = session.beginTransaction();
+			s.setType("student");
 			session.saveOrUpdate(s);
 			t.commit();
 		}catch(Exception e){
@@ -66,7 +67,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	/*Not yet implemented*/public static boolean addNewStudentBatch(List<objectClasses.people.Student> studenList){
+	public static boolean addNewStudentBatch(List<objectClasses.people.Student> studenList){
 		//NOT TESTED, NOT RELIABLE, DO NOT USE
 		//implements batch processing, which is faster
 		//should work well with save, may crash with update operations.
@@ -77,19 +78,19 @@ public class NewUserModule {
 			int count=0;
 			for (objectClasses.people.Student s : studenList){
 				session.saveOrUpdate(s);
-				if (++count%50 == 0){
+				if (++count%80 == 0){
 					session.flush();
 					session.clear();
+					System.out.println("session flushed");
 				}
 			}
 			t.commit();
 		}catch(Exception e){
 			t.rollback();
-			return false;
 		}
 		finally{
 			session.close();
 		}
-		return false;
+		return true;
 	}
 }

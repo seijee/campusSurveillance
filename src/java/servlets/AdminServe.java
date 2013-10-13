@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -122,7 +123,7 @@ public class AdminServe extends HttpServlet {
 		try {
 			out = response.getWriter();
 			
-			String[] id_s = request.getParameterValues("email");
+			String[] id_s = request.getParameterValues("id");
 			String[] gender_s = request.getParameterValues("gender");
 			String[] father_names_s = request.getParameterValues("father_name");
 			String[] mother_name_s = request.getParameterValues("mother_name");
@@ -132,18 +133,17 @@ public class AdminServe extends HttpServlet {
 			String[] mobile_s = request.getParameterValues("mobile"); 
 			String[] email_s = request.getParameterValues("email");  
 			String[] Name_s = request.getParameterValues("name"); 
+			String[] DOB_s = request.getParameterValues("dob");
+			String[] batch_s = request.getParameterValues("batch");
+			String[] semester_s = request.getParameterValues("semeseter");
+			String[] branch_s = request.getParameterValues("branch");
 			
-			//Calendar DOB = new GregorianCalendar(year, month, date);
-			String[] year_s = request.getParameterValues("year");
-			String[] month_s = request.getParameterValues("month");
-			String[] date_s = request.getParameterValues("date");
-
 			Student s;
-			
+			List<Student> sl = new ArrayList<Student>();
 			for (int i=0; i<id_s.length; i++){
-				int year=Integer.parseInt(year_s[i]);
-				int month=Integer.parseInt(month_s[i]);
-				int date=Integer.parseInt(date_s[i]);
+//				int year=Integer.parseInt(year_s[i]);
+//				int month=Integer.parseInt(month_s[i]);
+//				int date=Integer.parseInt(date_s[i]);
 				//s = new Student();
 				String category=null;
 				String batch=null;
@@ -162,20 +162,22 @@ public class AdminServe extends HttpServlet {
 				String type = "student"; 
 				String photo = "default.jpg"; 
 				String Name = Name_s[i]; 
-				Calendar DOB = new GregorianCalendar(year, month, date);
+				Calendar DOB = extractDate(DOB_s[i]);
 				List<Group> groups=null;
 				String display_pic = "notShared.jpg";
 				
 				s=new Student(category, batch, branch, semester, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+				sl.add(s);
+//				added = dao.NewUserModule.addNewStudentBatch(sl);
+//				if (added){
+//					out.println(s.getId()+" ["+s.getName()+"] added!!<br/>");
+//				}
+//				else {
+//					out.print(s.getId()+" ["+s.getName()+"] could not be added!!<br/>");
+//				}
 				
-				added = dao.NewUserModule.addNewStudent(s);
-				if (added){
-					out.println(s.getId()+" ["+s.getName()+"] added!!<br/>");
-				}
-				else {
-					out.print(s.getId()+" ["+s.getName()+"] could not be added!!<br/>");
-				}
 			}
+			added = dao.NewUserModule.addNewStudentBatch(sl);
 			
 		} catch (Exception ex) {
 			Logger.getLogger(AdminServe.class.getName()).log(Level.SEVERE, null, ex);

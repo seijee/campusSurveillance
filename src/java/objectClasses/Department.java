@@ -4,14 +4,17 @@ package objectClasses;
 import java.io.Serializable;
 
 public class Department implements Serializable {
-	private String departmentCode, title, HOD;
+	private String depCode, title, HOD;
 
-	public Department(String departmentCode, String title, String HOD) {
-		this.departmentCode = departmentCode;
+	public Department(String departmentCode , String title, String HOD) {
+		this.depCode = departmentCode;
 		this.title = title;
 		this.HOD = HOD;
 	}
 
+	public Department() {
+	}
+	
 	public String getHOD() {
 		return HOD;
 	}
@@ -20,12 +23,12 @@ public class Department implements Serializable {
 		this.HOD = HOD;
 	}
 
-	public String getDepartmentCode() {
-		return departmentCode;
+	public String getDepCode() {
+		return depCode;
 	}
 
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
+	public void setDepCode(String depCode) {
+		this.depCode = depCode;
 	}
 
 	public String getTitle() {

@@ -12,7 +12,7 @@ import objectClasses.Group;
  *
  * @author SeiJee
  */
-public abstract class Person {
+public class Person {
 	protected String id, password;
 	protected String gender,father_name, mother_name, bloodgroup,
 	p_address, r_address, mobile,email, type, photo,Name;

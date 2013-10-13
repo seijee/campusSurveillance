@@ -26,7 +26,7 @@ public class Faculty extends Person {
 		this.qualification = qualification;
 		this.designation = designation;
 		this.department = department;
-		this.join_date = join_date;
+		this.join_date = Calendar.getInstance();
 	}
 
 	public Faculty() {

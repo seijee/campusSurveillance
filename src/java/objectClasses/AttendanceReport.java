@@ -12,80 +12,134 @@ import java.util.Calendar;
  * @author SeiJee
  */
 public class AttendanceReport implements Serializable{
-	private String id, regards, writer, sessionId;
-	private int attended, lecturesHeld;
-	private Calendar begin,end, updatedOn;
+	private String  student, subject, updatedBy;
+	private int id,thAttended, thTotal,lbsAttended ,lbsTotal,forSemester;
+	private Calendar fromDate,toDate, updatedOn;
 
 	public AttendanceReport() {
-		attended=0;
-		lecturesHeld=0;
 	}
 
+	public AttendanceReport( String student, String subject, String updatedBy,
+	int thAttended, int thTotal, int lbsAttended, int lbsTotal, int semester, 
+	Calendar fromDate, Calendar toDate) {
+		this.student = student;
+		this.subject = subject;
+		this.thAttended = thAttended;
+		this.thTotal = thTotal;
+		this.lbsAttended = lbsAttended;
+		this.lbsTotal = lbsTotal;
+		this.forSemester = semester;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.updatedOn = Calendar.getInstance();
+		this.updatedBy = updatedBy;
+	}
 	
 	
-	public int getAttended() {
-		return attended;
+	@Override
+	public String toString() {
+		String s = subject+": "+student+" att "+thAttended+" outta "+thTotal+" from "+":"+forSemester+"sem";
+		return s;
 	}
 
-	public void setAttended(int attended) {
-		this.attended = attended;
+	//<editor-fold defaultstate="collapsed" desc="getterSetters">
+	public int getForSemester() {
+		return forSemester;
 	}
-
-	public String getWriter() {
-		return writer;
+	
+	public void setForSemester(int forSemester) {
+		this.forSemester = forSemester;
 	}
-
-	public void setWriter(String faculty) {
-		this.writer = faculty;
+	
+	public Calendar getFromDate() {
+		return fromDate;
 	}
-
-	public Calendar getBegin() {
-		return begin;
+	
+	public void setFromDate(Calendar fromDate) {
+		this.fromDate = fromDate;
 	}
-
-	public void setBegin(Calendar from) {
-		this.begin = from;
-	}
-
-	public String getId() {
+	
+	public int getId() {
 		return id;
 	}
-
-	public void setId(String id) {
+	
+	public void setId(int id) {
 		this.id = id;
 	}
-
-	public int getLecturesHeld() {
-		return lecturesHeld;
+	
+	public int getLbsAttended() {
+		return lbsAttended;
 	}
-
-	public void setLecturesHeld(int lecturesHeld) {
-		this.lecturesHeld = lecturesHeld;
+	
+	public void setLbsAttended(int lbsAttended) {
+		this.lbsAttended = lbsAttended;
 	}
-
-	public String getRegards() {
-		return regards;
+	
+	public int getLbsTotal() {
+		return lbsTotal;
 	}
-
-	public void setRegards(String regards) {
-		this.regards = regards;
+	
+	public void setLbsTotal(int lbsTotal) {
+		this.lbsTotal = lbsTotal;
 	}
-
-	public Calendar getEnd() {
-		return end;
+	
+	public String getStudent() {
+		return student;
 	}
-
-	public void setEnd(Calendar to) {
-		this.end = to;
+	
+	public void setStudent(String student) {
+		this.student = student;
 	}
-
+	
+	public String getSubject() {
+		return subject;
+	}
+	
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	
+	public int getThAttended() {
+		return thAttended;
+	}
+	
+	public void setThAttended(int thAttended) {
+		this.thAttended = thAttended;
+	}
+	
+	public int getThTotal() {
+		return thTotal;
+	}
+	
+	public void setThTotal(int thTotal) {
+		this.thTotal = thTotal;
+	}
+	
+	public Calendar getToDate() {
+		return toDate;
+	}
+	
+	public void setToDate(Calendar toDate) {
+		this.toDate = toDate;
+	}
+	
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	
 	public Calendar getUpdatedOn() {
 		return updatedOn;
 	}
-
+	
 	public void setUpdatedOn(Calendar updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-
- 
+	//</editor-fold>
+	
+	
+	
 }

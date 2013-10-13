@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import objectClasses.AttendanceReport;
 
 
 public class Excel {
@@ -180,7 +181,48 @@ public class Excel {
 			return set;
 		}
     }
-    /*NA*/public static void ImportPunctuality (File file){
+    /*Under construction*/public static void ImportPunctuality (File file){
 		//import punctuality of students of various concrete groups
+		List<AttendanceReport> reports = new ArrayList<AttendanceReport>();
+		try {
+            InputStream input = new BufferedInputStream(new FileInputStream(file));			
+            POIFSFileSystem fs = new POIFSFileSystem( input );
+            HSSFWorkbook wb = new HSSFWorkbook(fs);
+            HSSFSheet sheet = wb.getSheetAt(0);
+            
+            Iterator rows = sheet.rowIterator();
+			HSSFRow row;
+			Iterator cells;
+			HSSFCell cell;
+			
+			Map<String, Integer> values = new HashMap<String, Integer>();
+			
+			boolean indexed = false;
+			
+			//field detection started
+			while (!indexed && rows.hasNext()){
+				row = (HSSFRow) rows.next();
+				cells = row.cellIterator();
+			while (cells.hasNext()){
+				cell = (HSSFCell) cells.next();
+				if(HSSFCell.CELL_TYPE_STRING==cell.getCellType()){
+					String field = cell.getStringCellValue();
+					field = field.toUpperCase();
+					int index = cell.getColumnIndex();
+					//System.out.println(field + " >>>>" + index);
+					if (field.contains("ENROL")){
+						values.put("id", index);
+						indexed = true;
+					}else if (field.contains("ATTENDED")){
+						values.put("attended", index);
+					}else if (field.contains("TOTAL")){
+						values.put("total", index);
+					}
+				}
+			}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

@@ -87,15 +87,9 @@ response.setHeader("Pragma", "no-cache");
 			<li><a href="home.jsp">Contact details</a></li>
 			<li><a href="home.jsp">Change Password</a></li>
 		</ul>
-		<h1>New User</h1>
-		<ul>
-			<li><a href="addAdmin.jsp">Add admin</a></li>
-			<li><a href="addFaculty.jsp">Recruit Faculty</a></li>
-			<li><a href="addStudent.jsp">Admissions</a></li>
-		</ul>
 		<h1>People</h1>
 		<ul>
-			<li><a href="home.jsp">Browse People</a></li>
+			<li><a href="../students.jsp">Browse People</a></li>
 			<li><a href="deleteStudent.jsp">Delete Student</a></li>
 			<li><a href="../jq/serialize.jsp">Manage Groups</a></li>
 			<li><a href="../jq/shopping-cart.jsp">Manage Groups2</a></li>

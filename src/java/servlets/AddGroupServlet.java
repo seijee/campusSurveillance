@@ -8,6 +8,7 @@ import dao.GroupModule;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,15 +30,17 @@ public class AddGroupServlet extends HttpServlet {
 		try {
 			String[] student_ids = request.getParameterValues("student_ids");
 			String gid = request.getParameter("gid");
-			
 			objectClasses.people.Person user = (objectClasses.people.Person) request.getSession(false).getAttribute("user");
 			
 			objectClasses.Group g = null;
 			if (!"new".equals(gid))g=GroupModule.getGroup(gid);
 			if (g==null) {
 				String title = request.getParameter("group-title");
-				g=GroupModule.createGroup(title,user.getId());
+				String type = request.getParameter("type");
+				if (type == null || type=="") type = "general";
+				g=GroupModule.createGroup(title,user.getId(),type);
 			}
+			//ArrayList<String> s= new ArrayList<String>(student_ids);
 			GroupModule.addMembersToGroup(student_ids,g);
 		} finally {
 			out.close();

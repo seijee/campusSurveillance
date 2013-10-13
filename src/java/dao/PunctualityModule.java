@@ -34,24 +34,28 @@ public class PunctualityModule {
 		}
 		return true;
 	}
-	public static List<AttendanceReport> fetchAttendanceof(String pid, String sesn){
-		return fetchAttendanceof(dao.ConPerson.getPerson(pid),sesn);
+	public static List<AttendanceReport> getAttendanceof(String pid, int sesn){
+		return getAttendanceof(dao.ConPerson.getPerson(pid),sesn);
 	}
-	public static List<AttendanceReport> fetchAttendanceof(Person person,String sesn){
+	public static List<AttendanceReport> getAttendanceof(Person person,int sem){
 		Session session = sf.openSession();
 		List<AttendanceReport> reports = null;
 		try{
 			String q;
-			if (sesn.equals("") || sesn==null ||sesn.equalsIgnoreCase("all"))
-				q = "FROM AttendanceReport WHERE regards=:pid";
-			else q = "FROM AttendanceReport WHERE regards=:pid AND sessionId=:sesn";
+			if (sem==0)
+				q = "FROM AttendanceReport WHERE student=:pid";
+			else q = "FROM AttendanceReport WHERE student=:pid AND semester=:sesn";
 			Query query = session.createQuery(q);
 			query.setParameter("pid", person.getId());
-			if (!(sesn.equals("") || sesn==null ||sesn.equalsIgnoreCase("all")))
-				query.setParameter("sesn", sesn);
+			if (sem!=0)
+				query.setParameter("sesn", sem);
 			reports = query.list();
 			if (reports.isEmpty()){
 				reports = null;
+			}else{
+				for (AttendanceReport rep : reports){
+					System.out.println(rep);
+				}
 			}
 		}catch (Exception e){
 			e.printStackTrace();
@@ -60,13 +64,13 @@ public class PunctualityModule {
 			return reports;
 		}
 	}
-	public static Float calculatePunctuality(String pid, String sesn){
-		List<AttendanceReport> reports = fetchAttendanceof(pid, sesn);
+	public static Float calculatePunctuality(String pid, int sesn){
+		List<AttendanceReport> reports = getAttendanceof(pid, sesn);
 		if (reports == null) return 0f;
 		int appeared=0,total=0;
 		for (AttendanceReport rep : reports){
-			appeared += rep.getAttended();
-			total += rep.getLecturesHeld();
+			appeared += rep.getThAttended()+2*rep.getLbsAttended();
+			total += rep.getThTotal()+rep.getLbsTotal();
 		}
 		return ((0f+appeared)/total)*100;
 	}

@@ -2,39 +2,39 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="objectClasses.people.Person" table="people">
-    <id column="person_id" name="id">
+    <id column="person_id" name="id" length="20">
       <generator class="assigned"/>
     </id>
-    <property name="Name"/>
-    <property name="password"/>
-    <property column="gender" name="gender"/>
+    <property name="Name" length="32"/>
+    <property name="password" length="32"/>
+    <property column="gender" name="gender" length="8"/>
     <property column="DOB" name="DOB" type="calendar_date"/>
-    <property column="email" name="email"/>
-    <property column="mobile" name="mobile"/>
-    <property name="father_name"/>
-    <property name="mother_name"/>
-    <property name="bloodgroup"/>
-    <property name="p_address"/>
-    <property name="r_address"/>
-    <property column="type" name="type"/>
+    <property column="email" name="email" length="64"/>
+    <property column="mobile" name="mobile" length="12"/>
+    <property name="father_name" length="32"/>
+    <property name="mother_name" length="32"/>
+    <property name="bloodgroup" length="4"/>
+    <property name="p_address" length="128"/>
+    <property name="r_address" length="128"/>
+    <property column="type" name="type" length="16"/>
     <joined-subclass name="objectClasses.people.Admin" table="administration">
-      <key column="admin_id"/>
-      <property column="qualifications" name="qualifications"/>
-      <property name="designation"/>
+      <key column="admin_id" />
+      <property column="qualifications" name="qualifications" length="12"/>
+      <property name="designation" length="24"/>
       <property column="join_date" name="join_date" type="calendar_date"/>
     </joined-subclass>
     <joined-subclass name="objectClasses.people.Student" table="students">
       <key column="student_id"/>
-      <property name="category"/>
+      <property name="category" length="20"/>
       <property name="batch"/>
-      <property name="semester"/>
-      <property name="branch"/>
+      <property name="semester" />
+      <property name="branch" length="10"/>
     </joined-subclass>
     <joined-subclass name="objectClasses.people.Faculty" table="faculties">
       <key column="faculty_id"/>
-      <property name="department"/>
-      <property name="designation"/>
-      <property name="qualification"/>
+      <property name="department" length="10"/>
+      <property name="designation" length="20"/>
+      <property name="qualification" length="10"/>
       <property name="join_date" type="calendar_date"/>
     </joined-subclass>
   </class>
@@ -44,15 +44,10 @@
     </id>
     <property name="Title" not-null="true"/>
     <property name="owner" not-null="true"/>
-    <set cascade="save-update" fetch="select" inverse="true" lazy="true" name="people" table="people_group">
-      <key column="group_id"/>
-      <many-to-many class="objectClasses.people.Person" column="person_id"/>
+	<property name="type" />
+    <set  cascade="save-update"  fetch="select" inverse="true" lazy="true" name="people" table="people_group">
+		<key column="group_id"  />
+		<many-to-many class="objectClasses.people.Person" column="person_id" />
     </set>
-  </class>
-  <class name="objectClasses.Department" table="departments">
-    <id name="departmentCode">
-      <generator class="assigned"/>
-    </id>
-    <property name="title" unique="true"/>
   </class>
 </hibernate-mapping>

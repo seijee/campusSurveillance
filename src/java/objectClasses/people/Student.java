@@ -5,6 +5,7 @@
 package objectClasses.people;
 
 
+import java.util.Calendar;
 import objectClasses.people.Person;
 import java.util.Comparator;
 import java.util.List;
@@ -19,6 +20,19 @@ public class Student extends Person {
 	private String batch, branch;
 	private int semester;
 
+	public Student(String category, String batch, String branch, int semester, String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic) {
+		super(id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+		this.category = category;
+		this.batch = batch;
+		this.branch = branch;
+		this.semester = semester;
+	}
+
+	public Student() {
+	}
+
+	
+	
 	public static Comparator<Student> c =  new Comparator<Student>() {
 
 		@Override
@@ -27,7 +41,6 @@ public class Student extends Person {
 		}
 	};
 	
-
 	public String getBatch() {
 		return batch;
 	}
@@ -86,9 +99,7 @@ public class Student extends Person {
 
 	@Override
 	public String toString() {
-		String print = getId()+"<br/>"+getName();
-		getGroups();
-		
+		String print = getId()+"\t"+getName()+"\t\t\t"+getEmail();
 		return  print;
 	}
 	

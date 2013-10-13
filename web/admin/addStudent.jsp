@@ -148,16 +148,18 @@ Collections.sort(s,Student.c);
 if (s!=null)
 for (Student st : s) { %>
 <table class="student">
-	<tr><td></td><td><b><%= st.getId() %></b><input type="text" name="student_ids"	value="<%= st.getId() %>" hidden="hidden"		readonly="readonly"/></td></tr>
-<tr><td>Name</td><td><input type="text" name="names"			value="<%= st.getName() %>"		size="35" placeholder="Name"/></td></tr>
-<tr><td>Father</td><td><input type="text" name="father"		value="<%= (st.getFather_name()!=null)? st.getFather_name():"" %>"	size="35"  placeholder="father"/></td></tr>
-<tr><td>Mother</td><td><input type="text" name="mother"		value="<%= (st.getMother_name()!=null)? st.getMother_name():"" %>"	size="35"  placeholder="mother"/></td></tr>
+<tr><td></td><td><b><%= st.getId() %></b><input type="text" name="id"	value="<%= st.getId() %>" hidden="hidden"		readonly="readonly"/></td></tr>
+<tr><td>Name</td><td><input type="text" name="name"			value="<%= st.getName() %>"		size="35" placeholder="Name"/></td></tr>
+<tr><td>Father</td><td><input type="text" name="father_name"		value="<%= (st.getFather_name()!=null)? st.getFather_name():"" %>"	size="35"  placeholder="father"/></td></tr>
+<tr><td>Mother</td><td><input type="text" name="mother_name"		value="<%= (st.getMother_name()!=null)? st.getMother_name():"" %>"	size="35"  placeholder="mother"/></td></tr>
 <tr><td>Gender</td><td><input type="text" name="gender"		value="<%= (st.getGender()!=null)? st.getGender():"" %>"		size="35"	placeholder="Gender"/></td></tr>
 <tr><td>DOB</td><td><input type="text" name="dob"			
-						   value="<%= st.getDOB().get(Calendar.YEAR)%>-<%= st.getDOB().getDisplayName(Calendar.MONTH,Calendar.SHORT,Locale.ENGLISH)%>-<%= st.getDOB().get(Calendar.DAY_OF_MONTH)%>"size="10" placeholder="DOB"/></td></tr>
+	value="<%= st.getDOB().get(Calendar.YEAR)%>-<%= st.getDOB().getDisplayName(Calendar.MONTH,Calendar.SHORT,Locale.ENGLISH)%>-<%= st.getDOB().get(Calendar.DAY_OF_MONTH)%>"size="10" placeholder="DOB"/></td></tr>
+<tr><td>Blood Group</td><td><input type="text" name="bloodgroup"		value="<%= (st.getBloodgroup()!=null)? st.getBloodgroup():"NA" %>"	size="35" placeholder="branch"/></td></tr>
 <tr><td>email</td><td><input type="text" name="email"		value="<%= (st.getEmail()!=null)? st.getEmail():"" %>"	size="35" placeholder="email"/></td></tr>
 <tr><td>mobile</td><td><input type="text" name="mobile"		value="<%= (st.getMobile())!=null? st.getMobile():"" %>"		size="35"	 placeholder="Mobile Number"/></td></tr>
-<tr><td>address</td><td><textarea type="text" name="per_address" cols="22" rows="4"	placeholder="Address"/><%= (st.getP_address()!=null)? st.getP_address():"" %></textarea></td></tr>
+<tr><td>P address</td><td><textarea type="text" name="p_address" cols="22" rows="4"	placeholder="Address"/><%= (st.getP_address()!=null)? st.getP_address():"" %></textarea></td></tr>
+<tr><td>R address</td><td><textarea type="text" name="r_address" cols="22" rows="4"	placeholder="Residential Address"/><%= (st.getR_address()!=null)? st.getR_address():"" %></textarea></td></tr>
 <tr><td>category</td><td><input type="text" name="category"	value="<%= (st.getCategory()!=null)? st.getCategory():"" %>"	size="35" placeholder="category"/></td></tr>
 <tr><td>batch</td><td><input type="text" name="batch"		value="<%= (st.getBatch()!=null)? st.getBatch():"" %>"	size="35" placeholder="batch"/></td></tr>
 <tr><td>semester</td><td><input type="text" name="semester"	value="<%= (st.getSemester()!=0)?st.getSemester():"0" %>" size="35" placeholder="semester"/></td></tr>

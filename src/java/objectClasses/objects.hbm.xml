@@ -2,14 +2,27 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="objectClasses.AttendanceReport" table="attendance">
-    <composite-id>
-      <key-property name="writer"/>
-      <key-property column="starts" name="begin" type="calendar_date"/>
-      <key-property column="ends" name="end" type="calendar_date"/>
-      <key-property name="regards"/>
-    </composite-id>
-    <property column="appeared" name="attended"/>
-    <property column="totalLectures" name="lecturesHeld"/>
+	  <id name="id"><generator class="native"></generator></id>
+    
+      <property name="student"/>
+      <property name="subject"/>
+      <property column="fromDate" name="fromDate" type="calendar_date"/>
+      <property column="toDate" name="toDate" type="calendar_date"/>
+    
+    <property name="thAttended"/>
+    <property name="thTotal"/>
+	<property name="lbsAttended"/>
+    <property name="lbsTotal"/>
+	<property name="forSemester"/>
+	<property name="updatedBy"/>
     <property name="updatedOn" type="calendar"/>
+  </class>
+  
+  <class name="objectClasses.Department" table="departments">
+    <id name="depCode">
+      <generator class="assigned"/>
+    </id>
+    <property name="title" />
+    <property name="HOD"/>
   </class>
 </hibernate-mapping>

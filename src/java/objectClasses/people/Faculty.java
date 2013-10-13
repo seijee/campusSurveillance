@@ -4,6 +4,8 @@
  */
 package objectClasses.people;
 
+import java.util.List;
+import objectClasses.Group;
 import objectClasses.people.Person;
 import java.util.Calendar;
 import objectClasses.Department;
@@ -13,21 +15,33 @@ import objectClasses.Department;
  * @author SeiJee
  */
 public class Faculty extends Person {
-	private String qualification,designation ;
-	private Department department;
-	private Calendar join_date;
 	
+	private String qualification,designation ;
+	private String department;
+	private Calendar join_date;
+
+	
+	public Faculty(String qualification, String designation, String department, Calendar join_date, String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic) {
+		super(id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
+		this.qualification = qualification;
+		this.designation = designation;
+		this.department = department;
+		this.join_date = Calendar.getInstance();
+	}
+
+	public Faculty() {
+	}
 	
 	public void setFacultyId(String id){
 		id = "fac_"+Name;
 		super.setId(id);
 	}
 
-	public Department getDepartment() {
+	public String getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Department department) {
+	public void setDepartment(String department) {
 		this.department = department;
 	}
 

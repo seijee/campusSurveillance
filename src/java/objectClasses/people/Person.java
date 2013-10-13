@@ -12,13 +12,37 @@ import objectClasses.Group;
  *
  * @author SeiJee
  */
-public abstract class Person {
+public class Person {
 	protected String id, password;
 	protected String gender,father_name, mother_name, bloodgroup,
 	p_address, r_address, mobile,email, type, photo,Name;
 	protected Calendar DOB;
 	protected List<Group> groups;
 	public String display_pic;
+
+	public Person(String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic) {
+		this.id = id;
+		this.password = password;
+		this.gender = gender;
+		this.father_name = father_name;
+		this.mother_name = mother_name;
+		this.bloodgroup = bloodgroup;
+		this.p_address = p_address;
+		this.r_address = r_address;
+		this.mobile = mobile;
+		this.email = email;
+		this.type = type;
+		this.photo = photo;
+		this.Name = Name;
+		this.DOB = DOB;
+		this.groups = groups;
+		this.display_pic = display_pic;
+	}
+
+	public Person() {
+	}
+	
+	
 	
 	public String getName() {
 		return Name;

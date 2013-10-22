@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package user;
+package dao;
 
 
 import java.util.Calendar;
@@ -18,7 +18,7 @@ import org.hibernate.cfg.Configuration;
  *
  * @author SeiJee
  */
-public class UserController {
+public class SessionModule {
 	private static SessionFactory sf = new Configuration().configure().buildSessionFactory();
 	Session session = sf.openSession();
 	public Person CheckLogin(String uid, String pw){

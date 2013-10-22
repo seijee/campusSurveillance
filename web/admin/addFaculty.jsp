@@ -20,7 +20,7 @@ response.setDateHeader("Expires", 0);
         <title>JSP Page</title>
     </head>
     <body>
-        <form action=".AdminServe" method="POST">
+        <form action=".NewUser" method="POST">
 			<table border="0">
 				<tr>
 					<td>Name</td>

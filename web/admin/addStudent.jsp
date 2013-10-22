@@ -110,9 +110,8 @@
     <body>
 		<div width ="100%" height="300px">
 			<% List<Student> s = (List<Student>)request.getAttribute("newStudents");
-			
 			if (s==null){
-%>
+			%>
 			
 			<table align="center">
 				<tr>
@@ -130,7 +129,7 @@
 			</table>
 			<% } %>
 		</div>
-		<form action=".ImportStudents" method="POST" enctype="multipart/form-data">
+		<form action=".AddViaXLS" method="POST" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td><input type="file" name="myFile" multiple="multiple" /></td>
@@ -139,13 +138,12 @@
 		</table>
 		</form>
 		<div>
-		<form action="*.AdminServe" method="POST">
+		<form action=".NewUser" method="POST">
 			<table id="studentTable" border="0">
 			</table>
 <% 
-if (s!=null)
+if (s!=null){
 Collections.sort(s,Student.c);
-if (s!=null)
 for (Student st : s) { %>
 <table class="student">
 <tr><td></td><td><b><%= st.getId() %></b><input type="text" name="id"	value="<%= st.getId() %>" hidden="hidden"		readonly="readonly"/></td></tr>
@@ -165,7 +163,7 @@ for (Student st : s) { %>
 <tr><td>semester</td><td><input type="text" name="semester"	value="<%= (st.getSemester()!=0)?st.getSemester():"0" %>" size="35" placeholder="semester"/></td></tr>
 <tr><td>branch</td><td><input type="text" name="branch"		value="<%= (st.getBranch()!=null)? st.getBranch():"" %>"	size="35" placeholder="branch"/></td></tr>
 </table>
-<% } %>
+<% }} %>
 			</table>
 			<input type="submit" value="addStudents" name="submit" />
 		</form>

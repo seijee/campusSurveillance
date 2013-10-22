@@ -31,7 +31,7 @@ response.setHeader("Pragma", "no-cache");
 	</div>
 
 	<div class="content">
-		<form action=".AdminServe" method="POST">
+		<form action=".NewUser" method="POST">
 			<h1>Basic Details</h1>
 			<table>
 				<tr>

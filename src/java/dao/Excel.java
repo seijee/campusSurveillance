@@ -111,7 +111,7 @@ public class Excel {
 			
             while( rows.hasNext() ) {
                 row = (HSSFRow) rows.next();
-				//if (row.getCell(0).getCellType()==HSSFCell.CELL_TYPE_BLANK) continue;
+				
                 String id,name,father,Paddress, Raddress, gender, email,branch,mob,category,
 						mother;
 				int semester;

@@ -18,7 +18,7 @@ import objectClasses.people.Student;
 public class HugeData {
 	static Random r = new Random(1);
 public static void main(String[] args) {
-	//addHugeStudentBatch();
+	addHugeStudentBatch();
 	addHugeFaculties();
 }
 static void addHugeStudentBatch(){

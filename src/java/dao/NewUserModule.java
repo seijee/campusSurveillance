@@ -68,7 +68,6 @@ public class NewUserModule {
 		return true;
 	}
 	public static boolean addNewStudentBatch(List<objectClasses.people.Student> studenList){
-		//NOT TESTED, NOT RELIABLE, DO NOT USE
 		//implements batch processing, which is faster
 		//should work well with save, may crash with update operations.
 		Session session = sf.openSession();

@@ -10,7 +10,7 @@
 		<meta name="author" content="">
 
 		<!-- Le styles -->
-		<link href="./css1/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'/>
 		<style type="text/css">
 			body {

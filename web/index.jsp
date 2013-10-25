@@ -28,8 +28,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link type="text/css" href="./css1/bootstrap.css" rel="stylesheet" />
-		<link type="text/css" href="./css1/bootstrap-responsive.css" rel="stylesheet" />
+		<link type="text/css" href="./css/bootstrap.css" rel="stylesheet" />
+		<link type="text/css" href="./css/bootstrap-responsive.css" rel="stylesheet" />
         <title>JSP Page</title>
     </head>
     <body>
@@ -66,16 +66,16 @@
 		<%
 		// if admin
 				if (user.getClass().equals(Admin.class)) {
-					response.sendRedirect("admin/home.jsp");
+					response.sendRedirect("home.jsp");
 				}
 		// if faculty
 				if (user.getClass().equals(Faculty.class)) {
-					response.sendRedirect("faculty/home.jsp");
+					response.sendRedirect("./home.jsp");
 				}
 
 		// if student
 				if (user.getClass().equals(Student.class)) {
-					response.sendRedirect("student/home.jsp");
+					response.sendRedirect("home.jsp");
 				}
 			}
 		%>

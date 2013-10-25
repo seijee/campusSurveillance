@@ -19,7 +19,7 @@ public class HugeData {
 	static Random r = new Random(1);
 public static void main(String[] args) {
 	addHugeStudentBatch();
-	addHugeFaculties();
+	//addHugeFaculties();
 }
 static void addHugeStudentBatch(){
 		String category = "genral";
@@ -29,7 +29,7 @@ static void addHugeStudentBatch(){
 		String email="cg";
 		int sem=1;
 		List<Student> ls  = new ArrayList<Student>();
-		for (int i=10001; i<10301; i++){
+		for (int i=20001; i<20301; i++){
 			id = "en"+i;
 			name = "std_"+(i-10000)+" sur";
 			email = id+"@dom"+(1+i%5)+".com";

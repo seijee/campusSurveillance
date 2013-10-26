@@ -39,6 +39,7 @@ public class NewUser extends HttpServlet {
 		boolean added=false;
 		try {
 			String task = request.getParameter("submit");
+			out.print(task);
 			if (task.equals("addAdmin")){
 				added = addNewAdmin(request, response);
 			}
@@ -105,7 +106,7 @@ public class NewUser extends HttpServlet {
 		String r_address = request.getParameter("r_address"); 
 		String mobile = request.getParameter("mobile"); 
 		String email = request.getParameter("email"); 
-		String type = "admin"; 
+		String type = "faculty"; 
 		String photo = "default.jpg"; 
 		String Name = request.getParameter("name"); 
 		Calendar DOB = new GregorianCalendar(year, month, date);

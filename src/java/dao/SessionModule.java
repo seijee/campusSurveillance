@@ -38,11 +38,8 @@ public class SessionModule {
 			query.setParameter("uid", uid);
 			query.setParameter("pw", pw);
 
-			List r = query.list();
-			if (!r.isEmpty()){
-				System.out.println (r.get(0).getClass());
-				p = (Person)r.get(0);
-			}
+			p = (Person) query.uniqueResult();
+		
 		}
 		return p;
 	}

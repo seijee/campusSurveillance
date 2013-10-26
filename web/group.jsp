@@ -1,32 +1,21 @@
-<%-- 
-    Document   : Group
-    Created on : Oct 25, 2013, 8:11:04 AM
-    Author     : SeiJee
---%>
 
-<%@page import="java.util.List"%>
+<%@include file="_initSession.jsp" %>
 <%
-	objectClasses.Group group = dao.GroupModule.getGroup(request.getParameter("gid"));
+	objectClasses.Group mygroup = dao.GroupModule.getGroup(request.getParameter("gid"));
 %>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link type="text/css" href="css/bootstrap.css" rel="stylesheet" />
-		<link type="text/css" href="css/bootstrap-responsive.css" rel="stylesheet" />
-        <title>JSP Page</title>
+        <%@include file="_head.jsp" %>
     </head>
 	<body>
 		<%@include file="_navbar.jsp"%>
 		<div class="container-fluid">
-<% if (group==null){ %>
+<% if (mygroup==null){ %>
 		<h4>No Group selected</h4>
 <%}else{%>
-		<h4><%=group.getTitle()%> <small>(<%=group.getType()%>)</small></h4>
+		<h4><%=mygroup.getTitle()%> <small>(<%=mygroup.getType()%>)</small></h4>
 		<%
-			List<objectClasses.people.Person> gl = dao.GroupModule.getMembers(group);
+			List<objectClasses.people.Person> gl = dao.GroupModule.getMembers(mygroup);
 			for (objectClasses.people.Person p : gl  ){
 		%>	
 		<div class="span2 pull-left text-center">
@@ -35,5 +24,7 @@
 		<%}%>
 <%}%>
 		</div>
+<%@include file="_forms.jsp" %>
+<%@include file="_footer.jsp" %>
 	</body>
 </html>

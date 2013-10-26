@@ -14,7 +14,7 @@
 <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a href="home.jsp" class="brand">e-campus</a>
+				<a href="home.jsp" class="brand">Facebook</a>
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -25,11 +25,10 @@
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle js-activated" data-toggle="user"><strong><%=user.getName() %></strong></a>
 						<ul class="dropdown-menu" style="padding-top: 5px;">
-							<li class="text-right"><a href="user.SignOut">Log Out</a></li>
+							<li class="text-right"><a href="user.SignOut">Sign Out</a></li>
 						</ul>
 					</li>
 					</ul>
-					
 					
 					<ul class="nav">
 						<li class="dropdown">
@@ -43,7 +42,16 @@
 								<li><a href="group.jsp?gid=<%=g.getGroup_id()%>"><%=g.getTitle()%></a></li>	
 								<%}%>
 							</ul>
+						<% if (!user.getType().equals("student")){ %>
+						<li class="dropdown">
+							<a href="" class="dropdown-toggle js-activated" data-toggle="NewUser">New User</a>
+							<ul class="dropdown-menu" style="padding-top: 5px;"></a></li>
+								<li><a href="">Add New Admin</a></li>
+								<li><a href="">Add New Faculty</a></li>
+								<li><a href="">Add Student Batch</a></li>
+							</ul>
 						</li>
+						<% }%>
 					</ul>
 				</div>
 			</div>

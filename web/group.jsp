@@ -29,7 +29,7 @@
 			List<objectClasses.people.Person> gl = dao.GroupModule.getMembers(group);
 			for (objectClasses.people.Person p : gl  ){
 		%>	
-		<div class="span2 pull-left">
+		<div class="span2 pull-left text-center">
 			<h6><%=p.getName()%></h6>
 		</div>
 		<%}%>

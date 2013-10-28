@@ -22,7 +22,7 @@
 						<li class="dropdown">
 							<a href="" class="dropdown-toggle js-activated" data-toggle="dropdown">Groups</a>
 							<ul class="dropdown-menu" style="padding-top: 5px;"></a></li>
-								<li><a href="">Create</a></li>
+								<li><a href="#createGroup" role="button"  data-toggle="modal">Create</a></li>
 								<li class="divider"></li>
 								<%
 								for (Group group : alliedGroups){

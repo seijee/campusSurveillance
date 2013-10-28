@@ -29,4 +29,13 @@ public class ConPerson {
 		session.close();
 		return s;
 	}
+	public static List<Person> getAllFaculties(){
+	//return the person with specified person_id
+		Person s=null;
+		Session session = sf.openSession();
+		Query q= session.createQuery("FROM Person WHERE type='faculty'");
+		List l = q.list();
+		session.close();
+		return l;
+	}
 }

@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import objectClasses.Group;
+import objectClasses.people.Person;
 
 
 
@@ -21,30 +23,50 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author SeiJee
  */
-@WebServlet(name = "AddGroupServlet", urlPatterns = {"*.AddMembers"})
-public class AddGroupServlet extends HttpServlet {
+@WebServlet(name = "AddGroupServlet", urlPatterns = {"*.AddMembers","*.Create"})
+public class GroupServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try {
-			String[] student_ids = request.getParameterValues("student_ids");
-			String gid = request.getParameter("gid");
-			objectClasses.people.Person user = (objectClasses.people.Person) request.getSession(false).getAttribute("user");
+			String task = request.getParameter("submit");
 			
-			objectClasses.Group g = null;
-			if (!"new".equals(gid))g=GroupModule.getGroup(gid);
-			if (g==null) {
-				String title = request.getParameter("group-title");
-				String type = request.getParameter("type");
-				if (type == null || type=="") type = "general";
-				g=GroupModule.createGroup(title,user.getId(),type);
+			if ("creategroup".equalsIgnoreCase(task)){
+				Group ng = GroupCreater(request, response);
+				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
+			}else
+			if ("addMembers".equalsIgnoreCase(task)){
+				MemberAdder(request, response);
 			}
-			//ArrayList<String> s= new ArrayList<String>(student_ids);
-			GroupModule.addMembersToGroup(student_ids,g);
 		} finally {
 			out.close();
 		}
+	}
+	
+	private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("group-title");
+		String type = request.getParameter("type");
+		Person user = (Person) request.getSession(false).getAttribute("user");
+		if (type == null || "".equals(type)) type = "general";
+		return GroupModule.createGroup(title,user.getId(),type);
+	}
+	private static boolean MemberAdder (HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String[] student_ids = request.getParameterValues("student_ids");
+		String gid = request.getParameter("gid");
+		Person user = (Person) request.getSession(false).getAttribute("user");
+		
+		PrintWriter out = response.getWriter();
+
+		if (user!=null){
+			objectClasses.Group g = null;
+			if (!"new".equals(gid)) g=GroupModule.getGroup(gid);
+			if (g==null) {
+				out.println("group not found!");
+			}
+			GroupModule.addMembersToGroup(student_ids,g);
+		}
+		return false;
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

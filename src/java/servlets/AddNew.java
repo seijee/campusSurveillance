@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import objectClasses.Department;
 import objectClasses.Group;
 import objectClasses.people.Admin;
 import objectClasses.people.Faculty;
@@ -29,8 +30,8 @@ import objectClasses.people.Student;
  *
  * @author SeiJee
  */
-@WebServlet(name = "NewUser", urlPatterns = {"*.NewUser"})
-public class NewUser extends HttpServlet {
+@WebServlet(name = "AddNew", urlPatterns = {"*.New"})
+public class AddNew extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,12 +43,15 @@ public class NewUser extends HttpServlet {
 			out.print(task);
 			if (task.equals("addAdmin")){
 				added = addNewAdmin(request, response);
-			}
+			}else
 			if (task.equals("addFaculty")){
 				added = addFaculty(request, response);
-			}
+			}else
 			if (task.equals("addStudents")){
 				added = addStudent(request, response);
+			}else
+			if ("addDepartment".equals(task)){
+				addDepartment(request, response);
 			}
 		} finally {			
 			out.close();
@@ -185,6 +189,16 @@ public class NewUser extends HttpServlet {
 			out.close();
 			return added;
 		}
+	}
+	
+	private boolean addDepartment (HttpServletRequest request, HttpServletResponse response){
+		String code = request.getParameter("code");
+		String title = request.getParameter("title");
+		String HOD = request.getParameter("HOD");
+		
+		Department d = new Department(code, title, HOD);
+		dao.DepartmentModule.createDepartment(d);
+		return true;
 	}
 	
 	private static Calendar extractDate(String date){

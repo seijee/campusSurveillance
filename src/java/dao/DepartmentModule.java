@@ -7,6 +7,7 @@ package dao;
 import factory.conn;
 import java.util.List;
 import objectClasses.Department;
+import objectClasses.people.Person;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,5 +61,14 @@ public class DepartmentModule {
 			session.close();
 			return department;
 		}
+	}
+	public static List<Person> getDepFaculties(String depcode){
+		Person s=null;
+		Session session = sf.openSession();
+		Query q= session.createQuery("FROM Faculty WHERE department=:depcode");
+		q.setParameter("depcode", depcode);
+		List l = q.list();
+		session.close();
+		return l;
 	}
 }

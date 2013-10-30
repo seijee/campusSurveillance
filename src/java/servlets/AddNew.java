@@ -45,29 +45,24 @@ public class AddNew extends HttpServlet {
 			out.print(task);
 			if (task.equals("addAdmin")){
 				added = addNewAdmin(request, response);
-				out.close();
 				response.sendRedirect("home.jsp");
 			}else
 			if (task.equals("addFaculty")){
 				added = addFaculty(request, response);
-				out.close();
 				response.sendRedirect("home.jsp");
 			}else
 			if (task.equals("addStudents")){
 				addStudent(request, response);
-				out.close();
 			}else
 			if ("addDepartment".equals(task)){
 				addDepartment(request, response);
-				out.close();
 				response.sendRedirect("home.jsp");
 			}else
 			if ("creategroup".equalsIgnoreCase(task)){
 				Group ng = GroupCreater(request, response);
 				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
 			}
-		} finally {			
-			out.close();
+		} finally {
 		}
 	}
 
@@ -194,9 +189,11 @@ public class AddNew extends HttpServlet {
 			String type = request.getParameter("type");
 			Person user = (Person) request.getSession(false).getAttribute("user");
 			
+			String[] owner = {user.getId()};
 			
 			if (type == null || "".equals(type)) type = "general";
 			Group createdGroup = dao.GroupModule.SaveGroup(new Group(title,user.getId(),type));
+			dao.GroupModule.addMembersToGroup(owner, createdGroup);
 			dao.GroupModule.addMembersToGroup(id_s, createdGroup);
 			response.sendRedirect("group.jsp?gid="+createdGroup.getGroup_id());
 		} catch (Exception ex) {

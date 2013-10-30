@@ -42,7 +42,6 @@ public class NewUserModule {
 			t.commit();
 		}catch(Exception e){
 			t.rollback();
-			return false;
 		}
 		finally{
 			session.close();

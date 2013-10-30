@@ -20,11 +20,11 @@ import org.hibernate.cfg.Configuration;
  */
 public class SessionModule {
 	private static SessionFactory sf = new Configuration().configure().buildSessionFactory();
-	Session session = sf.openSession();
 	public Person CheckLogin(String uid, String pw){
 		String q;
 		Person p=null;
 		Query query=null;
+		Session session = sf.openSession();
 		if ("root".equals(uid) && "init".equals(pw)){
 			p =new Admin("master", "isowner", null, "root", "init", null, null, null, null, null, null, null, null, "admin", "default.jpg", "rootAdmin", null, null, "notShared.jpg");
 			p.setId("root");
@@ -32,14 +32,15 @@ public class SessionModule {
 			p.setPassword("init");
 			dao.NewUserModule.SaveAdmin((Admin)p);
 		}else{
-			q = "FROM Person WHERE id = :uid AND password=:pw";
-
+			/*q = "FROM Person WHERE id = :uid AND password=:pw";
 			query = session.createQuery(q);
 			query.setParameter("uid", uid);
-			query.setParameter("pw", pw);
+			query.setParameter("pw", pw);*/
 
-			p = (Person) query.uniqueResult();
-		
+			p = dao.ConPerson.getPerson(uid);
+			if (!pw.equals(p.getPassword())){
+				p=null;
+			}
 		}
 		return p;
 	}

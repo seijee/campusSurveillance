@@ -22,6 +22,7 @@
 		p = c.CheckLogin(uid, pw);
 		if (p != null) {
 			session.setAttribute("user", p);
+		}else{
 		}
 	}
 %>

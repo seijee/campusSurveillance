@@ -17,7 +17,7 @@ import org.hibernate.Transaction;
 public class NewUserModule {
 	private static SessionFactory sf = conn.getSf();
 	
-	public static boolean addNewAdmin(objectClasses.people.Admin newAdmin){
+	public static boolean SaveAdmin(objectClasses.people.Admin newAdmin){
 		Session session = sf.openSession();
 		Transaction t=null;
 		try {
@@ -33,7 +33,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	public static boolean addNewFaculty (objectClasses.people.Faculty f){
+	public static boolean SaveFaculty (objectClasses.people.Faculty f){
 		Session session = sf.openSession();
 		Transaction t = null;
 		try {
@@ -49,7 +49,7 @@ public class NewUserModule {
 		}
 		return true;
 	}
-	public static boolean addNewStudent(objectClasses.people.Student s) {
+	public static boolean SaveStudent(objectClasses.people.Student s) {
 		Session session = sf.openSession();
 		Transaction t = null;
 		try {

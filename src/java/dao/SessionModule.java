@@ -30,7 +30,7 @@ public class SessionModule {
 			p.setId("root");
 			p.setName("rootAdmin");
 			p.setPassword("init");
-			dao.NewUserModule.addNewAdmin((Admin)p);
+			dao.NewUserModule.SaveAdmin((Admin)p);
 		}else{
 			q = "FROM Person WHERE id = :uid AND password=:pw";
 

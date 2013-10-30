@@ -22,7 +22,7 @@ public class TestAttendance {
 		Calendar begin = new GregorianCalendar(2014, Calendar.OCTOBER,1),
 				 end = new GregorianCalendar(2014, Calendar.OCTOBER, 15);
 		Group g = dao.GroupModule.getGroup("1");
-		List<Student> members = dao.GroupModule.getStudents(g);
+		List<Student> members = dao.GroupModule.getMemberStudents(g);
 		Random r = new Random(574);
 		int i=1;
 		for(Student per : members){

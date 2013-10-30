@@ -19,7 +19,7 @@ import org.hibernate.Transaction;
  */
 public class DepartmentModule {
 	private static SessionFactory sf = conn.getSf();
-	public static Department createDepartment(Department d){
+	public static Department SaveDepartment(Department d){
 		Session s = sf.openSession();
 		Transaction trx=null ;
 		try{

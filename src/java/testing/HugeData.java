@@ -37,7 +37,7 @@ static void addHugeStudentBatch(){
 			if (i%60==0) sem++;
 			Student s = new Student(category, "2014", "cs", sem, id, "sss", gender, null, null, null, null, null, null, email, "student", null, name, null, null, null);
 			ls.add(s);
-			//dao.NewUserModule.addNewStudent(s);
+			//dao.NewUserModule.SaveStudent(s);
 		}
 		dao.NewUserModule.addNewStudentBatch(ls);
 		System.out.println("300 students added");
@@ -55,7 +55,7 @@ static void addHugeFaculties(){
 			String[] Deps = {"IT","CS","ME","EC"};
 			if (i%2==0) gender="Female"; else gender = "Male";
 			Faculty f =  new Faculty("MTech", "Assist. Prof", Deps[r.nextInt(500)%4],Calendar.getInstance() , id, "fff", gender, null, null, null, null, null, null, email, "faculty", null, name, null, null, null);
-			dao.NewUserModule.addNewFaculty(f);
+			dao.NewUserModule.SaveFaculty(f);
 		}
 		System.out.println("added 40 facuties! ");
 }

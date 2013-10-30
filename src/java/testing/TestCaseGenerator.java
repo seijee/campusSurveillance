@@ -40,21 +40,21 @@ public class TestCaseGenerator {
 		HugeData.addHugeStudentBatch();
 	}
 	static void addDepartment(String code, String dname, String hod){
-		Department d = dao.DepartmentModule.createDepartment(new Department(code, dname, hod));
+		Department d = dao.DepartmentModule.SaveDepartment(new Department(code, dname, hod));
 	}
 	static void testAddFaculty(String name, String department){
 		Faculty fac = new Faculty("BE", "professor", department, null, "fac_"+name, "fff", null, null, null, "B+", name+"address", null, null, name+"@gmail", "faculty", null, name, null, null, null);
-		dao.NewUserModule.addNewFaculty(fac);
+		dao.NewUserModule.SaveFaculty(fac);
 	}
 	static void testAddStudents(){
 		//
 		Faculty f = new Faculty("Mtech", "lecturer", "CS", Calendar.getInstance(), "fac_tunisha", "fff", "female", "father", null, "B+", "address1", null, "986852", "tunisha@gmail.com", "faculty", null, "Tunisha Saxena", null, null, null);
-		dao.NewUserModule.addNewFaculty(f);
+		dao.NewUserModule.SaveFaculty(f);
 		//
 		File file = new File("E:/Book1.xls");
 		List<Student> sl = dao.Excel.ImportStudents(file);
 		for (Student s : sl){
-			boolean added = dao.NewUserModule.addNewStudent(s);
+			boolean added = dao.NewUserModule.SaveStudent(s);
 			if (added) System.out.print("successfully added ");
 			else System.out.print("could not add ");
 			System.out.println(s);

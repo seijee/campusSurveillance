@@ -49,7 +49,7 @@ public class TestGroups {
 	}
 	static void testAddMembers(int i, int n, String gid){
 		Group g = dao.GroupModule.getGroup(gid);
-		List<Person> l = dao.GroupModule.getPeople();
+		List<Person> l = dao.GroupModule.getAllStudents();
 		String[] x = new String[n+5];
 		int index =0;
 		for (  ; i<n && i<l.size(); i++){

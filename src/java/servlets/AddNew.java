@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import dao.GroupModule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -24,6 +25,7 @@ import objectClasses.Department;
 import objectClasses.Group;
 import objectClasses.people.Admin;
 import objectClasses.people.Faculty;
+import objectClasses.people.Person;
 import objectClasses.people.Student;
 
 /**
@@ -43,15 +45,26 @@ public class AddNew extends HttpServlet {
 			out.print(task);
 			if (task.equals("addAdmin")){
 				added = addNewAdmin(request, response);
+				out.close();
+				response.sendRedirect("home.jsp");
 			}else
 			if (task.equals("addFaculty")){
 				added = addFaculty(request, response);
+				out.close();
+				response.sendRedirect("home.jsp");
 			}else
 			if (task.equals("addStudents")){
-				added = addStudent(request, response);
+				addStudent(request, response);
+				out.close();
 			}else
 			if ("addDepartment".equals(task)){
 				addDepartment(request, response);
+				out.close();
+				response.sendRedirect("home.jsp");
+			}else
+			if ("creategroup".equalsIgnoreCase(task)){
+				Group ng = GroupCreater(request, response);
+				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
 			}
 		} finally {			
 			out.close();
@@ -87,7 +100,7 @@ public class AddNew extends HttpServlet {
 		
 		Admin a = new Admin(designation, qualifications, join_date, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
 		
-		return dao.NewUserModule.addNewAdmin(a);
+		return dao.NewUserModule.SaveAdmin(a);
 	}
 
 	private boolean addFaculty (HttpServletRequest request, HttpServletResponse response){
@@ -101,7 +114,7 @@ public class AddNew extends HttpServlet {
 		Calendar join_date = Calendar.getInstance();
 		String department = request.getParameter("department");
 		String id = request.getParameter("email");
-		String password = "aaa";
+		String password = "fff";
 		String gender = request.getParameter("gender");
 		String father_name = request.getParameter("father_name");
 		String mother_name = request.getParameter("mother_name");
@@ -119,10 +132,10 @@ public class AddNew extends HttpServlet {
 		
 		Faculty f = new Faculty(qualifications, designation, department, join_date, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
 		
-		return  dao.NewUserModule.addNewFaculty(f);	
+		return  dao.NewUserModule.SaveFaculty(f);	
 	}
 	
-	private boolean addStudent (HttpServletRequest request, HttpServletResponse response){
+	private void addStudent (HttpServletRequest request, HttpServletResponse response) {
 		PrintWriter out = null;
 		boolean added=false;
 		try {
@@ -173,21 +186,24 @@ public class AddNew extends HttpServlet {
 				
 				s=new Student(category, batch, branch, semester, id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
 				sl.add(s);
-//				added = dao.NewUserModule.addNewStudentBatch(sl);
-//				if (added){
-//					out.println(s.getId()+" ["+s.getName()+"] added!!<br/>");
-//				}
-//				else {
-//					out.print(s.getId()+" ["+s.getName()+"] could not be added!!<br/>");
-//				}
 			}
 			added = dao.NewUserModule.addNewStudentBatch(sl);
 			
+			
+			String title = request.getParameter("group-title");
+			String type = request.getParameter("type");
+			Person user = (Person) request.getSession(false).getAttribute("user");
+			
+			
+			if (type == null || "".equals(type)) type = "general";
+			Group createdGroup = dao.GroupModule.SaveGroup(new Group(title,user.getId(),type));
+			dao.GroupModule.addMembersToGroup(id_s, createdGroup);
+			response.sendRedirect("group.jsp?gid="+createdGroup.getGroup_id());
 		} catch (Exception ex) {
-			throw ex;
+			ex.printStackTrace();
 		} finally {
 			out.close();
-			return added;
+			
 		}
 	}
 	
@@ -197,8 +213,25 @@ public class AddNew extends HttpServlet {
 		String HOD = request.getParameter("HOD");
 		
 		Department d = new Department(code, title, HOD);
-		dao.DepartmentModule.createDepartment(d);
+		dao.DepartmentModule.SaveDepartment(d);
+		Faculty new_hod = (Faculty) dao.ConPerson.getPerson(HOD);
+		new_hod.setDepartment(code);
+		new_hod.setDesignation("HOD");
+		dao.NewUserModule.SaveFaculty(new_hod);
 		return true;
+	}
+	
+	private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
+		String title = request.getParameter("group-title");
+		String type = request.getParameter("type");
+		Person user = (Person) request.getSession(false).getAttribute("user");
+		if (type == null || "".equals(type)) type = "general";
+		Group group = dao.GroupModule.SaveGroup(new Group(title, user.getId(), type));
+		if (group!=null){
+				String[] x = {group.getOwner()};
+				dao.GroupModule.addMembersToGroup(x, group);
+		}
+		return group;
 	}
 	
 	private static Calendar extractDate(String date){
@@ -212,21 +245,25 @@ public class AddNew extends HttpServlet {
 			} catch (ParseException ex) {}
 		return cal;
 	}
-
+	
+	
+	
+	//<editor-fold defaultstate="collapsed" desc="do get do post ">
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
+	
 	@Override
 	public String getServletInfo() {
 		return "Short description";
 	}
+	//</editor-fold>
 }

@@ -24,7 +24,7 @@ public class SignOutServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			request.getSession().invalidate();
-			response.sendRedirect("/StudentPortal/");
+			response.sendRedirect("./");
 		} finally {			
 			out.close();
 		}

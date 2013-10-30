@@ -4,27 +4,23 @@
  */
 package servlets;
 
-import dao.GroupModule;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import objectClasses.Group;
-import objectClasses.people.Person;
-
-
+import org.hibernate.Session;
 
 /**
  *
  * @author SeiJee
  */
-@WebServlet(name = "AddGroupServlet", urlPatterns = {"*.AddMembers"})
-public class GroupServlet extends HttpServlet {
+@WebServlet(name = "DeleteServlet", urlPatterns = {"*.Delete"})
+public class DeleteServlet extends HttpServlet {
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
@@ -32,47 +28,18 @@ public class GroupServlet extends HttpServlet {
 		try {
 			String task = request.getParameter("submit");
 			out.print(task);
-			if ("creategroup".equalsIgnoreCase(task)){
-				Group ng = GroupCreater(request, response);
-				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
-			}else
-			if ("addMembers".equalsIgnoreCase(task)){
-				MemberAdder(request, response);
+			if ("deleteGroup".equalsIgnoreCase(task)){
+				groupDeleter(request, response);
 			}
-		} finally {
+		} finally {			
 			out.close();
 		}
 	}
-	@Deprecated
-	private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
-		String title = request.getParameter("group-title");
-		String type = request.getParameter("type");
-		Person user = (Person) request.getSession(false).getAttribute("user");
-		if (type == null || "".equals(type)) type = "general";
-		Group group = dao.GroupModule.SaveGroup(new Group(title, user.getId(), type));
-		if (group!=null){
-				String[] x = {group.getOwner()};
-				dao.GroupModule.addMembersToGroup(x, group);
-		}
-		return group;
-	}
-	private static boolean MemberAdder (HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String[] member_ids = request.getParameterValues("member_ids");
+	
+	private static void groupDeleter (HttpServletRequest request, HttpServletResponse response){
 		String gid = request.getParameter("gid");
-		Person user = (Person) request.getSession(false).getAttribute("user");
-		
-		PrintWriter out = response.getWriter();
-		out.print(gid);
-		if (user!=null){
-			objectClasses.Group g = null;
-			if (!"new".equals(gid)) g=GroupModule.getGroup(gid);
-			if (g==null) {
-				out.println("group not found!");
-			}
-			GroupModule.addMembersToGroup(member_ids,g);
-		}
-		response.sendRedirect("group.jsp?gid="+gid);
-		return false;
+		Group group = dao.GroupModule.getGroup(gid);
+		dao.GroupModule.deleteGroup(group);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

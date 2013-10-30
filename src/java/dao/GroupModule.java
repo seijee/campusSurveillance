@@ -19,10 +19,12 @@ import org.hibernate.Transaction;
 
 public class GroupModule {
 	private static SessionFactory sf = conn.getSf();
-	public static Group createGroup/*deprecated*/(String title,String owner, String type){
-		return createGroup(new Group( title, owner, type));
+	
+	@Deprecated
+	public static Group createGroup(String title,String owner, String type){
+		return SaveGroup(new Group( title, owner, type));
 	}
-	public static Group createGroup(Group g){
+	public static Group SaveGroup(Group g){
 		Session session = sf.openSession();
 		Transaction tx = null;
 		try{
@@ -35,11 +37,28 @@ public class GroupModule {
 			e.printStackTrace();
 		}finally{
 			session.close();
-			if (g!=null){
-				String[] x = {g.getOwner()};
-				addMembersToGroup(x, g);
-			}
 			return g;
+		}
+	}
+	public static boolean deleteGroup (Group g){
+		Session session = sf.openSession();
+		Transaction tx = null;
+		try{
+			tx=session.beginTransaction();
+			Query q = session.createSQLQuery("Delete from people_group where group_id=?");
+			q.setLong(0, g.getGroup_id());
+			q.executeUpdate();
+			q= session.createSQLQuery("Delete from groups where group_id=?");
+			q.setLong(0, g.getGroup_id());
+			q.executeUpdate();
+			tx.commit();
+		}catch(Exception e){
+			tx.rollback();
+			e.printStackTrace();
+			return false;
+		}finally{
+			session.close();
+			return true;
 		}
 	}
 	public static Group updateGroup (Group g){
@@ -146,7 +165,7 @@ public class GroupModule {
 		List<Person> members=null;
 		Session session = sf.openSession();
 		try{
-			Query q = session.createQuery("SELECT pg FROM Group g join g.people pg"
+			Query q = session.createQuery("SELECT DISTINCT pg FROM Group g join g.people pg"
 				+ " WHERE g.id=:id");
 			q.setParameter("id", group.getGroup_id());
 			members = q.list();
@@ -175,7 +194,7 @@ public class GroupModule {
 			return members;
 		}
 	}
-	public static List<Student> getStudents(Group group){
+	public static List<Student> getMemberStudents(Group group){
 		//Tested working
 		List<Student> members=null;
 		Session session = sf.openSession();
@@ -222,7 +241,8 @@ public class GroupModule {
 		return groups;
 	}
 	
-	/*DEPRICATED*/ public static List<Person> getPeople(){
+	@Deprecated
+	public static List<Person> getAllStudents(){
 		//returns List of all the students in database
 		Session session = sf.openSession();
 		//Query q = session.createQuery("FROM Faculty Order By id");
@@ -235,15 +255,13 @@ public class GroupModule {
 		session.close();
 		return l;
 	}
-	/*Depricated*/public static HashSet<Group> getThemAll(){
+	@Deprecated
+	public static List<Group> getAllGroups(){
 		Session session = sf.openSession();
-		Query q = session.createQuery("FROM Group");
+		Query q = session.createQuery("FROM objectClasses.Group g order by g.type");
 		
-		List<Group> l = q.list();
-		HashSet<Group> groups = new HashSet<Group>();
-		for (Group g : l){
-			groups.add(g);
-		}
+		List<Group> groups = q.list();
+		
 		session.close();
 		return groups;
 }

@@ -3,15 +3,13 @@
     Created on : Aug 17, 2013, 8:36:20 PM
     Author     : SeiJee
 --%>
-<%@include file="_initSession.jsp" %>
+<%@include file="keyComponents/_initSession.jsp" %>
 <%@page import="java.util.Locale"%>
-<%@page import="objectClasses.people.Person"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Collection"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="objectClasses.people.Student"%>
 <%@page import="java.util.Enumeration"%>
@@ -20,7 +18,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="_head.jsp" %>
+        <%@include file="keyComponents/_head.jsp" %>
 		<script>
 			function addField(){
 				$st = document.getElementById("studentTable");
@@ -68,63 +66,78 @@
 			function deleteRows(){
 				$st = document.getElementById("studentTable");
 				try {
-            var table = document.getElementById("studentTable");
-            var rowCount = table.rows.length;
+					var table = document.getElementById("studentTable");
+					var rowCount = table.rows.length;
  
-            for(var i=1; i<rowCount; i++) {
-                var row = table.rows[i];
-                var chkbox = row.cells[0].childNodes[0];
-                if(null != chkbox && true == chkbox.checked) {
+					for(var i=1; i<rowCount; i++) {
+						var row = table.rows[i];
+						var chkbox = row.cells[0].childNodes[0];
+						if(null != chkbox && true == chkbox.checked) {
                     
-                    table.deleteRow(i);
-                    rowCount--;
-                    i--;
-                }
+							table.deleteRow(i);
+							rowCount--;
+							i--;
+						}
  
  
-            }
-            }catch(e) {
-                alert(e);
-            }
+					}
+				}catch(e) {
+					alert(e);
+				}
 				
 			}
 		</script>
     </head>
-	
+
     <body>
-	<% List<Student> s = (List<Student>)request.getAttribute("newStudents");%>
-<%if (s!=null){%>
-		
-	<div class="container-fluid">
-		<form action="StudentBatch.New" method="POST">
-			<table id="studentTable" border="0">
-			
-<% 
-Collections.sort(s,Student.c);
-for (Student st : s) { %>
-<tr>
-<td><b><%= st.getId() %></b><input type="text" name="id"	value="<%= st.getId() %>" class="hide"		readonly="readonly"/></td>
-<td><input type="text" name="name"			value="<%= st.getName() %>"		size="35" placeholder="Name"/></td>
-<td><input type="text" name="father_name"		value="<%= (st.getFather_name()!=null)? st.getFather_name():"" %>"	size="35"  placeholder="father"/></td>
-<td><input type="text" name="mother_name"		value="<%= (st.getMother_name()!=null)? st.getMother_name():"" %>"	size="35"  placeholder="mother"/></td>
-<td><input type="text" name="gender"		value="<%= (st.getGender()!=null)? st.getGender():"" %>"		size="35"	placeholder="Gender"/></td>
-<td><input type="text" name="dob"			
-	value="<%= st.getDOB().get(Calendar.YEAR)%>-<%= st.getDOB().getDisplayName(Calendar.MONTH,Calendar.SHORT,Locale.ENGLISH)%>-<%= st.getDOB().get(Calendar.DAY_OF_MONTH)%>"size="10" placeholder="DOB"/></td>
-<td><input type="text" name="bloodgroup"		value="<%= (st.getBloodgroup()!=null)? st.getBloodgroup():"NA" %>"	size="35" placeholder="branch"/></td>
-<td><input type="text" name="email"		value="<%= (st.getEmail()!=null)? st.getEmail():"" %>"	size="35" placeholder="email"/></td>
-<td><input type="text" name="mobile"		value="<%= (st.getMobile())!=null? st.getMobile():"" %>"		size="35"	 placeholder="Mobile Number"/></td>
-<td><textarea type="text" name="p_address" cols="22" rows="4"	placeholder="Address"/><%= (st.getP_address()!=null)? st.getP_address():"" %></textarea></td>
-<td><textarea type="text" name="r_address" cols="22" rows="4"	placeholder="Residential Address"/><%= (st.getR_address()!=null)? st.getR_address():"" %></textarea></td>
-<td><input type="text" name="category"	value="<%= (st.getCategory()!=null)? st.getCategory():"" %>"	size="35" placeholder="category"/></td>
-<td><input type="text" name="batch"		value="<%= (st.getBatch()!=null)? st.getBatch():"" %>"	size="35" placeholder="batch"/></td>
-<td><input type="text" name="semester"	value="<%= (st.getSemester()!=0)?st.getSemester():"0" %>" size="35" placeholder="semester"/></td>
-<td><input type="text" name="branch"		value="<%= (st.getBranch()!=null)? st.getBranch():"" %>"	size="35" placeholder="branch"/></td>
-</tr>
-<% } %>
-			</table>
-			<input type="submit" value="addStudents" name="submit" />
-		</form>
-	</div>
-<%}%>
+		<% List<Student> s = (List<Student>) request.getAttribute("newStudents");%>
+		<%if (s != null) {%>
+		<% String groupTitle = (String) request.getAttribute("groupName"); %>
+		<div class="container-fluid">
+			<form action="StudentBatch.New" method="POST">
+				<table>
+				<tr>
+					<td>Group Title</td>
+					<td><input type="text" name="group-title" value="<%=groupTitle%>" size="30" /></td>
+				</tr>
+				<tr>
+					<td>Purpose</td>
+					<td>
+						<select name="type">
+							<option value="general">General Purpose</option>
+							<option value="concrete">Special Purpose</option>
+						</select>
+					</td>
+				</tr>
+				</table>
+				<input type="submit" value="addStudents" name="submit" />
+				<table class="table table-stripped " id="studentTable" border="0">
+					<%
+						Collections.sort(s, Student.c);
+						for (Student st : s) {%>
+					<tr>
+						<td><input type="text" name="id" value="<%= st.getId()%>" readonly="readonly"  /></td>
+						<td><input type="text" name="name"			value="<%= st.getName()%>"		size="35" placeholder="Name"/></td>
+						<td><input type="text" name="father_name"		value="<%= (st.getFather_name() != null) ? st.getFather_name() : ""%>"	size="35"  placeholder="father"/></td>
+						<td><input type="text" name="mother_name"		value="<%= (st.getMother_name() != null) ? st.getMother_name() : ""%>"	size="35"  placeholder="mother"/></td>
+						<td><input type="text" name="gender"		value="<%= (st.getGender() != null) ? st.getGender() : ""%>"		size="35"	placeholder="Gender"/></td>
+						<td><input type="text" name="dob"			
+								   value="<%= st.getDOB().get(Calendar.YEAR)%>-<%= st.getDOB().getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH)%>-<%= st.getDOB().get(Calendar.DAY_OF_MONTH)%>"size="10" placeholder="DOB"/></td>
+						<td><input type="text" name="bloodgroup"		value="<%= (st.getBloodgroup() != null) ? st.getBloodgroup() : "NA"%>"	size="35" placeholder="branch"/></td>
+						<td><input type="text" name="email"		value="<%= (st.getEmail() != null) ? st.getEmail() : ""%>"	size="35" placeholder="email"/></td>
+						<td><input type="text" name="mobile"		value="<%= (st.getMobile()) != null ? st.getMobile() : ""%>"		size="35"	 placeholder="Mobile Number"/></td>
+						<td><textarea name="p_address" cols="22" rows="1"	placeholder="Address"><%= (st.getP_address() != null) ? st.getP_address() : ""%></textarea></td>
+						<td><textarea name="r_address" cols="22" rows="1"	placeholder="Residential Address"><%= (st.getR_address() != null) ? st.getR_address() : ""%></textarea></td>
+						<td><input type="text" name="category"	value="<%= (st.getCategory() != null) ? st.getCategory() : ""%>"	size="35" placeholder="category"/></td>
+						<td><input type="text" name="batch"		value="<%= (st.getBatch() != null) ? st.getBatch() : ""%>"	size="35" placeholder="batch"/></td>
+						<td><input type="text" name="semester"	value="<%= (st.getSemester() != 0) ? st.getSemester() : "0"%>" size="35" placeholder="semester"/></td>
+						<td><input type="text" name="branch"		value="<%= (st.getBranch() != null) ? st.getBranch() : ""%>"	size="35" placeholder="branch"/></td>
+					</tr>
+					<% }%>
+				</table>
+				<input type="submit" value="addStudents" name="submit" />
+			</form>
+		</div>
+		<%}%>
     </body>
 </html>

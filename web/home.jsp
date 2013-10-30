@@ -1,15 +1,15 @@
-<%@include file="_initSession.jsp" %>
+<%@include file="keyComponents/_initSession.jsp" %>
 
 <html>
 <head>
-	<%@include file="_head.jsp" %>
+	<%@include file="keyComponents/_head.jsp" %>
 </head>
 <body>
-	<%@include file="_navbar.jsp" %>
+	<%@include file="keyComponents/_navbar.jsp" %>
 	<div class="container-fluid">
 		
 	</div>
-	<%@include file="_forms.jsp" %>
-	<%@include file="_footer.jsp" %>
+	<%@include file="keyComponents/_forms.jsp" %>
+	<%@include file="keyComponents/_footer.jsp" %>
 </body>
 </html>

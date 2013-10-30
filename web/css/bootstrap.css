@@ -293,7 +293,7 @@ a:focus {
 [class*="span"] {
   float: left;
   min-height: 1px;
-  margin-left: 20px;
+  *margin-left: 20px;
 }
 
 .container,
@@ -419,8 +419,8 @@ a:focus {
   display: block;
   float: left;
   width: 100%;
-  min-height: 30px;
-  margin-left: 2.127659574468085%;
+  min-height: 5px;
+  margin-left: 0.7%;
   *margin-left: 2.074468085106383%;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -428,7 +428,7 @@ a:focus {
 }
 
 .row-fluid [class*="span"]:first-child {
-  margin-left: 0;
+  *margin-left: 0;
 }
 
 .row-fluid .controls-row [class*="span"] + [class*="span"] {
@@ -643,8 +643,8 @@ a:focus {
 }
 
 .container-fluid {
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 2%;
+  padding-left: 2%;
   *zoom: 1;
 }
 
@@ -750,11 +750,11 @@ h4,
 h5,
 h6 {
   margin: 10px 0;
-  font-family: ;sansLight;
+  *font-family: sansLight;
   font-weight: bold;
-  line-height: 20px;
+  line-height: 1em;
   color: inherit;
-  *text-rendering: optimizelegibility;
+  text-rendering: optimizelegibility;
 }
 
 h1 small,
@@ -772,7 +772,7 @@ h1,
 h2,
 h3 {
 	font-family: sansLight;
-  line-height: 40px;
+  line-height: 1em;
 }
 
 h1 {
@@ -5650,6 +5650,7 @@ a.thumbnail:focus {
   white-space: nowrap;
   vertical-align: baseline;
   background-color: #999999;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .label {

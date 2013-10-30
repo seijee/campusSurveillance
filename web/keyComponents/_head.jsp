@@ -5,5 +5,7 @@
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="Charchit"/> 
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="./css/custom.css" media="screen"/>
+<script src="./js/jquery.js"></script>
+<!--link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css" media="screen"/-->
 <title>eCampus</title>

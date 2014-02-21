@@ -21,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import objectClasses.AttendanceReport;
 import objectClasses.Department;
 import objectClasses.Group;
 import objectClasses.people.Admin;
@@ -61,6 +62,9 @@ public class AddNew extends HttpServlet {
 			if ("creategroup".equalsIgnoreCase(task)){
 				Group ng = GroupCreater(request, response);
 				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
+			}else
+			if ("addAttendance".equalsIgnoreCase(task)){
+				addAttendance(request, response);
 			}
 		} finally {
 		}
@@ -68,11 +72,7 @@ public class AddNew extends HttpServlet {
 
 	private boolean addNewAdmin (HttpServletRequest request, HttpServletResponse response){
 		
-		int year = Integer.parseInt(request.getParameter("year"));
-		int month = Integer.parseInt(request.getParameter("month"));
-		int date = Integer.parseInt(request.getParameter("date"));
-		
-		
+	
 		String designation = request.getParameter("designation");
 		String qualifications = request.getParameter("qualification");
 		Calendar join_date = Calendar.getInstance();
@@ -89,7 +89,9 @@ public class AddNew extends HttpServlet {
 		String type = "admin"; 
 		String photo = "default.jpg"; 
 		String Name = request.getParameter("name"); 
-		Calendar DOB = new GregorianCalendar(year, month, date);
+		String dob = request.getParameter("dob");
+		
+		Calendar DOB = extractDate(dob);
 		List<Group> groups=null;
 		String display_pic = "notShared.jpg";
 		
@@ -100,9 +102,9 @@ public class AddNew extends HttpServlet {
 
 	private boolean addFaculty (HttpServletRequest request, HttpServletResponse response){
 		
-		 int year = Integer.parseInt(request.getParameter("year"));
+		 /*int year = Integer.parseInt(request.getParameter("year"));
 		 int month = Integer.parseInt(request.getParameter("month"));
-		 int date = Integer.parseInt(request.getParameter("date"));
+		 int date = Integer.parseInt(request.getParameter("date"));*/
 		 
 		String designation = request.getParameter("designation");
 		String qualifications = request.getParameter("qualification");
@@ -121,7 +123,10 @@ public class AddNew extends HttpServlet {
 		String type = "faculty"; 
 		String photo = "default.jpg"; 
 		String Name = request.getParameter("name"); 
-		Calendar DOB = new GregorianCalendar(year, month, date);
+		String dob = request.getParameter("dob");
+		
+		Calendar DOB = extractDate(dob);
+		//Calendar DOB = new GregorianCalendar(year, month, date);
 		List<Group> groups=null;
 		String display_pic = "notShared.jpg";
 		
@@ -192,7 +197,7 @@ public class AddNew extends HttpServlet {
 			String[] owner = {user.getId()};
 			
 			if (type == null || "".equals(type)) type = "general";
-			Group createdGroup = dao.GroupModule.SaveGroup(new Group(title,user.getId(),type));
+			Group createdGroup = GroupCreater(request, response); //dao.GroupModule.SaveGroup(new Group(title,user.getId(),type));
 			dao.GroupModule.addMembersToGroup(owner, createdGroup);
 			dao.GroupModule.addMembersToGroup(id_s, createdGroup);
 			response.sendRedirect("group.jsp?gid="+createdGroup.getGroup_id());
@@ -207,7 +212,7 @@ public class AddNew extends HttpServlet {
 	private boolean addDepartment (HttpServletRequest request, HttpServletResponse response){
 		String code = request.getParameter("code");
 		String title = request.getParameter("title");
-		String HOD = request.getParameter("HOD");
+		String HOD = request.getParameter("hod");
 		
 		Department d = new Department(code, title, HOD);
 		dao.DepartmentModule.SaveDepartment(d);
@@ -221,9 +226,10 @@ public class AddNew extends HttpServlet {
 	private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
 		String title = request.getParameter("group-title");
 		String type = request.getParameter("type");
+		String description = request.getParameter("description");
 		Person user = (Person) request.getSession(false).getAttribute("user");
 		if (type == null || "".equals(type)) type = "general";
-		Group group = dao.GroupModule.SaveGroup(new Group(title, user.getId(), type));
+		Group group = dao.GroupModule.SaveGroup(new Group(title, user.getId(), type,description));
 		if (group!=null){
 				String[] x = {group.getOwner()};
 				dao.GroupModule.addMembersToGroup(x, group);
@@ -243,7 +249,43 @@ public class AddNew extends HttpServlet {
 		return cal;
 	}
 	
-	
+	private void addAttendance (HttpServletRequest request, HttpServletResponse response) {
+		PrintWriter out = null;
+		boolean added=false;
+		
+		try {
+			out = response.getWriter();
+			
+			String[] id_s = request.getParameterValues("person_id");
+			String[] theory_s = request.getParameterValues("theoryAttendance");
+			String[] practical_s = request.getParameterValues("practicalAttendance");
+			int maxTheory = Integer.parseInt(request.getParameter("maxTheory"));
+			int maxLabs = Integer.parseInt(request.getParameter("maxLabs"));
+			String subject =  "default"; //request.getParameter("subject");
+			String from_date = request.getParameter("from_date");
+			String to_date = request.getParameter("to_date");
+			Calendar from = extractDate(from_date);
+			Calendar to = extractDate(from_date);
+			
+			
+			Person user = (Person) request.getSession(false).getAttribute("user");
+			AttendanceReport report;
+			List<AttendanceReport> reports = new ArrayList<AttendanceReport>();
+			for (int i=0; i<id_s.length; i++){
+				String id = id_s[i];
+				int theoryAttendance = Integer.parseInt(theory_s[i]);
+				int labAttendance = Integer.parseInt(practical_s[i]);
+				report = new AttendanceReport(id, subject, user.getId(), theoryAttendance, maxTheory, labAttendance, maxLabs, i, from, to); 
+				reports.add(report);
+				added = dao.PunctualityModule.addNewAttendenceReport(report);
+			}
+			response.sendRedirect("home.jsp");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			out.close();
+		}
+	}
 	
 	//<editor-fold defaultstate="collapsed" desc="do get do post ">
 	@Override

@@ -45,6 +45,7 @@
     <property name="Title" not-null="true"/>
     <property name="owner" not-null="true"/>
 	<property name="type" />
+	<property name="description" type="text" />
     <set  cascade="save-update"  fetch="select" inverse="true" lazy="true" name="people" table="people_group">
 		<key column="group_id"  />
 		<many-to-many class="objectClasses.people.Person" column="person_id" />

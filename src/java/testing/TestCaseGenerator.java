@@ -24,7 +24,7 @@ import org.hibernate.Session;
 public class TestCaseGenerator {
 	public static void main(String[] args) throws Exception {
 		generateTestData();
-		//TestGroups.main(args);
+		TestGroups.main(args);
 	}
 	
 	public static void generateTestData(){

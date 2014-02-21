@@ -22,59 +22,46 @@
 		p = c.CheckLogin(uid, pw);
 		if (p != null) {
 			session.setAttribute("user", p);
-		}else{
+		} else {
 		}
 	}
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link type="text/css" href="./css/bootstrap.css" rel="stylesheet" />
-		<link type="text/css" href="./css/bootstrap-responsive.css" rel="stylesheet" />
-        <title>JSP Page</title>
+		<link type="text/css" href="./css/bootstrap3.css" rel="stylesheet" />
+		<link type="text/css" href="./css/login.css" rel="stylesheet" />
+        <title>Login</title>
     </head>
     <body>
 		<%
 			Person user = (Person) session.getAttribute("user");
 			if (user == null) {%>
 
-		<div class="well">
-		<form action="" method="POST" class="form-horizontal offset4">
-			<div class="control-group">
-				<label class="control-label" for="user_id">User Id</label>
-				<div class="controls">
-					<input type="text" name="user_id" id="user_id" placeholder="User Id"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="password">Password</label>
-				<div class="controls">
-					<input type="password" name="password" id="password" placeholder="Password"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<label class="checkbox">
-						<input type="checkbox"> Remember me
-					</label>
-					<button type="submit" name="SignIn" value="SignIn" class="btn">Sign in</button>
-				</div>
-			</div>
-		</form>
+		<div class="container">
+			<form action="" method="POST" class="form-signin" role="form">
+				<h2 class="form-signin-heading">Sign in</h2>
+				<input type="text" name="user_id" class="form-control" placeholder="User Name" required autofocus>
+				<input type="password" name="password" class="form-control" placeholder="Password" required>
+				<!--label class="checkbox">
+				  <input type="checkbox" value="remember-me"> Remember me
+				</label-->
+				<button class="btn btn-lg btn-primary btn-block" type="submit" name="SignIn" value="SignIn">Sign in</button>
+			</form>
 		</div>
 		<% } else {%>
 		<a href=".SignOut" >logout</a>
 		<%
-		// if admin
+				// if admin
 				if (user.getClass().equals(Admin.class)) {
 					response.sendRedirect("home.jsp");
 				}
-		// if faculty
+				// if faculty
 				if (user.getClass().equals(Faculty.class)) {
 					response.sendRedirect("./home.jsp");
 				}
 
-		// if student
+				// if student
 				if (user.getClass().equals(Student.class)) {
 					response.sendRedirect("home.jsp");
 				}

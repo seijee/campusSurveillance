@@ -19,7 +19,7 @@ public class HugeData {
 	static Random r = new Random(1);
 public static void main(String[] args) {
 	addHugeStudentBatch();
-	//addHugeFaculties();
+	addHugeFaculties();
 }
 static void addHugeStudentBatch(){
 		String category = "genral";

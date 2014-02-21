@@ -5,7 +5,7 @@
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="Charchit"/>
 
-<link rel="stylesheet" type="text/css" href="./css/bootstrap3.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="./css/datepicker3.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="./css/custom.css" media="screen"/>
 <!--link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css" media="screen"/-->

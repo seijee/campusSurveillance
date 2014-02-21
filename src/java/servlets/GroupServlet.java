@@ -32,10 +32,10 @@ public class GroupServlet extends HttpServlet {
 		try {
 			String task = request.getParameter("submit");
 			out.print(task);
-			if ("creategroup".equalsIgnoreCase(task)){
+			/*if ("creategroup".equalsIgnoreCase(task)){
 				Group ng = GroupCreater(request, response);
 				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
-			}else
+			}else*/
 			if ("addMembers".equalsIgnoreCase(task)){
 				MemberAdder(request, response);
 			}
@@ -44,7 +44,7 @@ public class GroupServlet extends HttpServlet {
 		}
 	}
 	@Deprecated
-	private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
+	/*private static Group  GroupCreater (HttpServletRequest request, HttpServletResponse response){
 		String title = request.getParameter("group-title");
 		String type = request.getParameter("type");
 		Person user = (Person) request.getSession(false).getAttribute("user");
@@ -55,7 +55,7 @@ public class GroupServlet extends HttpServlet {
 				dao.GroupModule.addMembersToGroup(x, group);
 		}
 		return group;
-	}
+	}*/
 	private static boolean MemberAdder (HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String[] member_ids = request.getParameterValues("member_ids");
 		String gid = request.getParameter("gid");

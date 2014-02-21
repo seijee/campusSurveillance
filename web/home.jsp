@@ -5,7 +5,7 @@
 	<%@include file="keyComponents/_head.jsp" %>
 </head>
 <body>
-	<%@include file="keyComponents/_navbar.jsp" %>
+	<jsp:include page="keyComponents/_navbar.jsp" flush="true" />
 	<div class="container-fluid">
 		
 	</div>

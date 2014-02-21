@@ -1,5 +1,5 @@
-
 package dao;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -19,210 +19,260 @@ import java.util.Iterator;
 import java.util.List;
 import objectClasses.AttendanceReport;
 
-
 public class Excel {
+
 	private static String toTitleCase(String s) {
-    //s = s.toLowerCase();
-	final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
-                                                 // to be capitalized
+		//s = s.toLowerCase();
+		final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
+		// to be capitalized
 
-    StringBuilder sb = new StringBuilder();
-    boolean capNext = true;
+		StringBuilder sb = new StringBuilder();
+		boolean capNext = true;
 
-    for (char c : s.toCharArray()) {
-        c = (capNext)
-                ? Character.toUpperCase(c)
-                : Character.toLowerCase(c);
-        sb.append(c);
-        capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
-    }
-    return sb.toString();
+		for (char c : s.toCharArray()) {
+			c = (capNext)
+					? Character.toUpperCase(c)
+					: Character.toLowerCase(c);
+			sb.append(c);
+			capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
+		}
+		return sb.toString();
 	}
-    public static List<Student> ImportStudents(File file ) {
-        
+
+	public static List<Student> ImportStudents(File file) {
+
 		List<Student> set = new ArrayList<Student>();
 		try {
-            InputStream input = new BufferedInputStream(new FileInputStream(file));			
-            POIFSFileSystem fs = new POIFSFileSystem( input );
-            HSSFWorkbook wb = new HSSFWorkbook(fs);
-            HSSFSheet sheet = wb.getSheetAt(0);
-            
-            Iterator rows = sheet.rowIterator();
+			InputStream input = new BufferedInputStream(new FileInputStream(file));
+			POIFSFileSystem fs = new POIFSFileSystem(input);
+			HSSFWorkbook wb = new HSSFWorkbook(fs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+
+			Iterator rows = sheet.rowIterator();
 			HSSFRow row;
 			Iterator cells;
 			HSSFCell cell;
-			
+
 			Map<String, Integer> values = new HashMap<String, Integer>();
-			
+
 			boolean indexed = false;
-			
-			
+
+
 			//field detection started
-			while (!indexed && rows.hasNext()){
+			while (!indexed && rows.hasNext()) {
 				row = (HSSFRow) rows.next();
 				cells = row.cellIterator();
-			while (cells.hasNext()){
-				cell = (HSSFCell) cells.next();
-				if(HSSFCell.CELL_TYPE_STRING==cell.getCellType()){
-					String field = cell.getStringCellValue();
-					field = field.toUpperCase();
-					int index = cell.getColumnIndex();
-					System.out.println(field + " >>>>" + index);
-					if (field.contains("ENROL")){
-						values.put("id", index);
-						indexed = true;
-					}else if (field.contains("NAME") || field.contains("FATHER") || field.contains("MOTHER") ){
-						if (field.contains("FATHER")){
-							values.put("father", index);
-						}else if (field.contains("MOTHER")){
-							values.put("mother", index);
-						}else{
-							values.put("name", index);
+				while (cells.hasNext()) {
+					cell = (HSSFCell) cells.next();
+					if (HSSFCell.CELL_TYPE_STRING == cell.getCellType()) {
+						String field = cell.getStringCellValue();
+						field = field.toUpperCase();
+						int index = cell.getColumnIndex();
+						System.out.println(field + " >>>>" + index);
+						if (field.contains("ENROL")) {
+							values.put("id", index);
+							indexed = true;
+						} else if (field.contains("NAME") || field.contains("FATHER") || field.contains("MOTHER")) {
+							if (field.contains("FATHER")) {
+								values.put("father", index);
+							} else if (field.contains("MOTHER")) {
+								values.put("mother", index);
+							} else {
+								values.put("name", index);
+							}
+						} else if (field.contains("GENDER")) {
+							values.put("gender", index);
+						} else if (field.contains("DOB")) {
+							values.put("dob", index);
+						} else if (field.contains("MAIL")) {
+							values.put("email", index);
+						} else if (field.contains("MOB")) {
+							values.put("mobile", index);
+						} else if (field.contains("ADDRESS")) {
+							if (field.contains("RESID")) {
+								values.put("res_address", index);
+							} else {
+								values.put("per_address", index);
+							}
+						} else if (field.contains("CAT")) {
+							values.put("category", index);
+						} else if (field.contains("BRANCH")) {
+							values.put("branch", index);
+						} else if (field.contains("BATCH")) {
+							values.put("batch", index);
+						} else if (field.contains("SEM")) {
+							values.put("semester", index);
 						}
-					}else if (field.contains("GENDER")){
-						values.put("gender", index);
-					}else if (field.contains("DOB")){
-						values.put("dob", index);
-					}else if (field.contains("MAIL")){
-						values.put("email", index);
-					}else if (field.contains("MOB")){
-						values.put("mobile", index);
-					}else if (field.contains("ADDRESS")){
-						if (field.contains("RESID")){
-							values.put("res_address", index);
-						}else{
-							values.put("per_address", index);
-						}
-					}else if (field.contains("CAT")){
-						values.put("category", index);
-					}else if (field.contains("BRANCH")){
-						values.put("branch", index);
-					}else if (field.contains("BATCH")){
-						values.put("batch", index);
-					}else if (field.contains("SEM")){
-						values.put("semester", index);
 					}
 				}
 			}
-			}
 			//fields detected
-			
+
 			//data retrieval started
-			
-            while( rows.hasNext() ) {
-                row = (HSSFRow) rows.next();
-				
-                String id,name,father,Paddress, Raddress, gender, email,branch,mob,category,
+
+			while (rows.hasNext()) {
+				row = (HSSFRow) rows.next();
+
+				String id, name, father, Paddress, Raddress, gender, email, branch, mob, category,
 						mother;
 				int semester;
 				Calendar dob = Calendar.getInstance();
 				if (row.getCell(values.get("id")).getCellType() == HSSFCell.CELL_TYPE_BLANK
-					|| 	row.getCell(values.get("name")).getCellType() == HSSFCell.CELL_TYPE_BLANK
-					) continue;
+						|| row.getCell(values.get("name")).getCellType() == HSSFCell.CELL_TYPE_BLANK) {
+					continue;
+				}
 				id = row.getCell(values.get("id")).getStringCellValue();
-				Student p = (Student)dao.ConPerson.getPerson(id);
-				if (p==null) {
+				Student p = (Student) dao.ConPerson.getPerson(id);
+				if (p == null) {
 					p = new Student();
 					p.setPassword("aaa");
 				}
-						p.setId(id);
-						name = row.getCell(values.get("name")).getStringCellValue();
-						name = toTitleCase(name);
-						p.setName(name);
-				if (values.containsKey("father")){	
+				p.setId(id);
+				name = row.getCell(values.get("name")).getStringCellValue();
+				name = toTitleCase(name);
+				p.setName(name);
+				if (values.containsKey("father")) {
 					father = row.getCell(values.get("father")).getStringCellValue();
 					p.setFather_name(father);
-				}if (values.containsKey("mother")){	
+				}
+				if (values.containsKey("mother")) {
 					mother = row.getCell(values.get("mother")).getStringCellValue();
 					p.setMother_name(mother);
-				}if (values.containsKey("per_address")){
+				}
+				if (values.containsKey("per_address")) {
 					Paddress = row.getCell(values.get("per_address")).getStringCellValue();
 					p.setP_address(Paddress);
-				}if (values.containsKey("res_address")){
+				}
+				if (values.containsKey("res_address")) {
 					Raddress = row.getCell(values.get("res_address")).getStringCellValue();
 					p.setR_address(Raddress);
-				}if (values.containsKey("gender")){
+				}
+				if (values.containsKey("gender")) {
 					gender = row.getCell(values.get("gender")).getStringCellValue();
 					p.setGender(gender);
-				}if (values.containsKey("email")){
+				}
+				if (values.containsKey("email")) {
 					email = row.getCell(values.get("email")).getStringCellValue();
 					p.setEmail(email);
-				}if (values.containsKey("branch")){
+				}
+				if (values.containsKey("branch")) {
 					branch = row.getCell(values.get("branch")).getStringCellValue();
 					p.setBranch(branch);
-				}if (values.containsKey("mobile")){
+				}
+				if (values.containsKey("mobile")) {
 					double m = row.getCell(values.get("mobile")).getNumericCellValue();
-					long mobileNo = (long)m;
+					long mobileNo = (long) m;
 					mob = Long.toString(mobileNo);
 					p.setMobile(mob);
-				}if (values.containsKey("category")){
+				}
+				if (values.containsKey("category")) {
 					category = row.getCell(values.get("category")).getStringCellValue();
 					p.setCategory(category);
-				}if (values.containsKey("dob")){
+				}
+				if (values.containsKey("dob")) {
 					dob.setTime(row.getCell(values.get("dob")).getDateCellValue());
 					p.setDOB(dob);
-				}if (values.containsKey("semester")){
-					semester = (int)row.getCell(values.get("semester")).getNumericCellValue();
+				}
+				if (values.containsKey("semester")) {
+					semester = (int) row.getCell(values.get("semester")).getNumericCellValue();
 					p.setSemester(semester);
 				}
-				
+
 				if (!"".equals(id) && !"".equals(name)) {
-					System.out.println(p.getId()+" "+p.getName());
+					System.out.println(p.getId() + " " + p.getName());
 					set.add(p);
 					//controllers.ConStudent.addNewStudent(p);
-				}	
-			}	
-        } catch ( IOException ex ) {
-            ex.printStackTrace();
-        }finally{
-			if (set.isEmpty() || set==null){
+				}
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (set.isEmpty() || set == null) {
 				return null;
 			}
 			return set;
 		}
-    }
-    /*Under construction*/public static void ImportPunctuality (File file){
+	}
+	/*Under construction*/
+
+	public static List<AttendanceReport> ImportPunctuality(File file) {
 		//import punctuality of students of various concrete groups
 		List<AttendanceReport> reports = new ArrayList<AttendanceReport>();
 		try {
-            InputStream input = new BufferedInputStream(new FileInputStream(file));			
-            POIFSFileSystem fs = new POIFSFileSystem( input );
-            HSSFWorkbook wb = new HSSFWorkbook(fs);
-            HSSFSheet sheet = wb.getSheetAt(0);
-            
-            Iterator rows = sheet.rowIterator();
+			InputStream input = new BufferedInputStream(new FileInputStream(file));
+			POIFSFileSystem fs = new POIFSFileSystem(input);
+			HSSFWorkbook wb = new HSSFWorkbook(fs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+
+			Iterator rows = sheet.rowIterator();
 			HSSFRow row;
 			Iterator cells;
 			HSSFCell cell;
-			
+
 			Map<String, Integer> values = new HashMap<String, Integer>();
-			
+
 			boolean indexed = false;
-			
+
 			//field detection started
-			while (!indexed && rows.hasNext()){
+			while (!indexed && rows.hasNext()) {
 				row = (HSSFRow) rows.next();
 				cells = row.cellIterator();
-			while (cells.hasNext()){
-				cell = (HSSFCell) cells.next();
-				if(HSSFCell.CELL_TYPE_STRING==cell.getCellType()){
-					String field = cell.getStringCellValue();
-					field = field.toUpperCase();
-					int index = cell.getColumnIndex();
-					//System.out.println(field + " >>>>" + index);
-					if (field.contains("ENROL")){
-						values.put("id", index);
-						indexed = true;
-					}else if (field.contains("ATTENDED")){
-						values.put("attended", index);
-					}else if (field.contains("TOTAL")){
-						values.put("total", index);
+				while (cells.hasNext()) {
+					cell = (HSSFCell) cells.next();
+					if (HSSFCell.CELL_TYPE_STRING == cell.getCellType()) {
+						String field = cell.getStringCellValue();
+						field = field.toUpperCase();
+						int index = cell.getColumnIndex();
+						//System.out.println(field + " >>>>" + index);
+						if (field.contains("ENROL")) {
+							values.put("id", index);
+							indexed = true;
+						} else if (field.contains("THEORY")) {
+							values.put("theoryAttended", index);
+						} else if (field.contains("PRACT")) {
+							values.put("practicalAttended", index);
+						}
 					}
 				}
 			}
+			//fields detected
+
+			//data retrieval started
+
+			while (rows.hasNext()) {
+				row = (HSSFRow) rows.next();
+
+				String id;
+				int semester, theory, practical, maxth, maxp;
+
+				if (row.getCell(values.get("id")).getCellType() == HSSFCell.CELL_TYPE_BLANK) {
+					continue;
+				}
+
+
+				id = row.getCell(values.get("id")).getStringCellValue();
+				AttendanceReport ar = new AttendanceReport();
+				
+				ar.setStudent(id);
+				if (values.containsKey("theoryAttended")) {
+					theory = (int) row.getCell(values.get("theoryAttended")).getNumericCellValue();
+					ar.setThAttended(theory);
+				}if (values.containsKey("practicalAttended")) {
+					practical = (int) row.getCell(values.get("practicalAttended")).getNumericCellValue();
+					ar.setLbsAttended(practical);
+				}
+
+				
+				
+				if (!"".equals(id)) {
+					//System.out.println(ar.getStudent()+"\t"+ar.getThAttended()+"\t");
+					reports.add(ar);
+				}
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			return reports;
 		}
 	}
 }

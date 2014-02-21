@@ -20,10 +20,7 @@ import org.hibernate.Transaction;
 public class GroupModule {
 	private static SessionFactory sf = conn.getSf();
 	
-	@Deprecated
-	public static Group createGroup(String title,String owner, String type){
-		return SaveGroup(new Group( title, owner, type));
-	}
+	
 	public static Group SaveGroup(Group g){
 		Session session = sf.openSession();
 		Transaction tx = null;
@@ -84,7 +81,8 @@ public class GroupModule {
 		Long gid = null;
 		Group g = null;
 		try {
-			gid = Long.parseLong(id);
+			if (!id.equalsIgnoreCase("") || id!=null)
+				gid = Long.parseLong(id);
 			Query q = session.createQuery("FROM Group WHERE group_id =:gid");
 			q.setParameter("gid", gid);
 			g = (Group) q.uniqueResult();

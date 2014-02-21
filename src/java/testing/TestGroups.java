@@ -40,8 +40,9 @@ public class TestGroups {
 	
 	static void groupGenerator(){
 		Group g = null;
-		for (int i=1; i<=10; i++){
-			g = dao.GroupModule.createGroup("group900"+i, "fac30"+i, "concrete");
+		for (int i=1; i<=100; i++){
+			g = new Group("group900"+i, "fac30"+i, "concrete","description");
+			dao.GroupModule.SaveGroup(g);
 			int x = (i-1)*30;
 			System.out.println(x+" "+(x+30)+" "+g.getGroup_id());
 			testAddMembers(x, x+30, g.getGroup_id()+"");
@@ -49,6 +50,8 @@ public class TestGroups {
 	}
 	static void testAddMembers(int i, int n, String gid){
 		Group g = dao.GroupModule.getGroup(gid);
+		System.out.println(gid);
+		System.out.println(g.getTitle()+" "+g.getOwner()+" "+g.getType());
 		List<Person> l = dao.GroupModule.getAllStudents();
 		String[] x = new String[n+5];
 		int index =0;
@@ -56,7 +59,7 @@ public class TestGroups {
 			x[index++] = l.get(i).getId();
 		}
 		System.out.println("adding...");
-		System.out.println(g.getTitle()+" "+g.getOwner()+" "+g.getType());
+		
 		if ("concrete".equals(g.getType())){
 			for (int j=1; j<=5; j++){
 				r.setSeed(Calendar.getInstance().getTimeInMillis());

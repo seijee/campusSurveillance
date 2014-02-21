@@ -19,11 +19,6 @@
 			
 			<div class="row-fluid">	
 				<div class="span9 affix" style="margin-left: 0%; max-height: 80%; ">
-					<ul class="nav nav-pills">
-						<li class=""><a href="group.jsp?gid=<%=mygroup.getGroup_id() %>">Home</a></li>
-						<li class="active"><a href="#">Edit</a></li>
-						<li><a href="<%=mygroup.getTitle() %>.Delete?gid=<%=mygroup.getGroup_id() %>&&submit=deleteGroup">Delete!!</a></li>
-					</ul>
 					<div class="span11 well" style="border: 1px solid red; max-height: 80%; overflow-y:scroll; ">
 					<div class="header"><h2><%= mygroup.getTitle()%>  <span class="badge"><%= mygroup.getType()%></span></h2></div>
 					<% List<objectClasses.people.Person> gl = dao.GroupModule.getMembers(mygroup);%>
@@ -131,4 +126,6 @@
 		<%@include file="keyComponents/_forms.jsp" %>
 		<%@include file="keyComponents/_footer.jsp" %>
 	</body>
+	<% session.removeAttribute("mygroup"); %>
+	<% session.setAttribute("selection", "group"); %>
 </html>

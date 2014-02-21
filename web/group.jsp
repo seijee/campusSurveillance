@@ -1,42 +1,30 @@
 
 <%@include file="keyComponents/_initSession.jsp" %>
+<%@page autoFlush="true" %>
 <% objectClasses.Group mygroup = dao.GroupModule.getGroup(request.getParameter("gid"));%>
+<% List<Person> members = dao.GroupModule.getMembers(mygroup); %>
 <html>
     <head>
         <%@include file="keyComponents/_head.jsp" %>
     </head>
 	<body>
-		<%@include file="keyComponents/_navbar.jsp"%>
-
-		<% if (mygroup == null) {%>
+		<jsp:include page="keyComponents/_navbar.jsp" flush="true" />
+		<% if (mygroup == null || !members.contains(user)) {%>
 		<h4>No Group selected</h4>
-		<% } else {%>
 		
-		
-		<div class="container-fluid">
-			<ul class="nav nav-pills span9">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="editGroup.jsp?gid=<%=mygroup.getGroup_id() %>">Edit</a></li>
-					<li><a href="#">...</a></li>
-			</ul>
-			<div class="row-fluid">
-				
-					
-				<div class="span9 well" style="border: 1px solid red; ">
+		<%}else{%>
+		<div class="container">
+				<div class="col-md-9 well" style="border: 1px solid red; ">
 					<div class="header"><h2><%= mygroup.getTitle()%> <span class="label"><h4><%= mygroup.getType()%></h4></span></h2></div>
 					<h3>-<%= mygroup.getOwner() %></h3>
-					<a href="editGroup.jsp?gid=<%= mygroup.getGroup_id() %>">Edit!</a>
 				</div>
-				
-				
 				<!-- List of members -->
-				<div class="span3 well">
-					<% List<Person> members = dao.GroupModule.getMembers(mygroup); %>
+				<div class="col-md-3 well">
+					
 					<% for (Person member : members){ %>
-						<div class="offset1" onclick="addToList('<%= member.getName()%>','<%= member.getId()%>')"><a><%= member.getName()%></a></div>
+						<div class="" ><a onclick="addToList('<%= member.getName()%>','<%= member.getId()%>')" ><%= member.getName()%></a></div>
 					<%}%>
 				</div>
-			</div>
 		</div>
 		<% }%>
 		
@@ -54,4 +42,5 @@
 		<%@include file="keyComponents/_forms.jsp" %>
 		<%@include file="keyComponents/_footer.jsp" %>
 	</body>
+
 </html>

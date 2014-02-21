@@ -38,6 +38,7 @@ public class SessionModule {
 			query.setParameter("pw", pw);*/
 
 			p = dao.ConPerson.getPerson(uid);
+			if (p!=null)
 			if (!pw.equals(p.getPassword())){
 				p=null;
 			}

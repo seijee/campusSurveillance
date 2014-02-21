@@ -40,13 +40,15 @@ public class AddViaXLS extends HttpServlet {
 		List fileItemsList = null;
 		float filesize = 0;
 		String _fileLink;
+		String groupName="";
+		String groupId="";
 		String _fileName = null;
 		ServletConfig sc = getServletConfig();
 		String _uploadDir = sc.getServletContext().getRealPath("/upload/");
 		//Change upload with your directory
-		HttpSession session = request.getSession();
+		String task = "";
 		PrintWriter out = response.getWriter();
-
+		out.print("xls");
 		try {
 			if (ServletFileUpload.isMultipartContent(request)) {
 				ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
@@ -64,6 +66,13 @@ public class AddViaXLS extends HttpServlet {
 					if (fileItemTemp.isFormField()) {
 						if (fileItemTemp.getFieldName().equals("filename")) {
 							optionalFileName = fileItemTemp.getString();
+						}if (fileItemTemp.getFieldName().equalsIgnoreCase("submit")){
+							task = fileItemTemp.getString();
+						}if (fileItemTemp.getFieldName().equalsIgnoreCase("group")){
+							groupName = fileItemTemp.getString();	//used while adding a group
+						}if (fileItemTemp.getFieldName().equalsIgnoreCase("gid")){
+							groupId = fileItemTemp.getString();	//used while adding a group
+							System.out.println(groupId);
 						}
 
 						/*
@@ -106,13 +115,26 @@ public class AddViaXLS extends HttpServlet {
 									out.print("Are you sure the file was in .xls format?");
 								} else {
 									fileItem.write(file);
-									List<Student> s = dao.Excel.ImportStudents(file);
-									file.delete();
-									request.setAttribute("newStudents", s);
-									request.setAttribute("groupName", file.getName());
-									RequestDispatcher dispatcher = request.getRequestDispatcher("./addStudent.jsp");
-									if (dispatcher != null) {
-										dispatcher.forward(request, response);
+									
+									if ("addStudents".equalsIgnoreCase(task)){
+										List<Student> s = dao.Excel.ImportStudents(file);
+										file.delete();
+										request.setAttribute("newStudents", s);
+										request.setAttribute("groupName", file.getName());
+										RequestDispatcher dispatcher = request.getRequestDispatcher("./addStudent.jsp");
+										if (dispatcher != null) {
+											dispatcher.forward(request, response);
+										}
+									}else if ("uploadAttendance".equalsIgnoreCase(task)){
+										List<objectClasses.AttendanceReport> s = dao.Excel.ImportPunctuality(file);
+										//file.delete();
+										request.setAttribute("newAttendanceReports", s);
+										request.setAttribute("gid", groupId);
+										
+										RequestDispatcher dispatcher = request.getRequestDispatcher("./uploadAttendance.jsp");
+										if (dispatcher != null) {
+											dispatcher.forward(request, response);
+										}
 									}
 								}
 							} catch (Exception e) {
@@ -127,23 +149,28 @@ public class AddViaXLS extends HttpServlet {
 			e.printStackTrace();
 		} finally {
 		}
-
+	}
+	
+	private static void addStudents(HttpServletRequest request, HttpServletResponse response ){
+		
 	}
 
+	//<editor-fold defaultstate="collapsed" desc="do get do post">
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
 	}
-
+	
 	@Override
 	public String getServletInfo() {
 		return "Short description";
-	}// </editor-fold>
+	}
+	//</editor-fold>
 }

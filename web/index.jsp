@@ -1,15 +1,17 @@
-<%-- 
-    Document   : index
-    Created on : Aug 17, 2013, 12:55:37 PM
-    Author     : SeiJee
---%>
+
+<!DOCTYPE html>
 
 <%@page import="objectClasses.people.*"%>
 <%@page import="dao.SessionModule"%>
 <%@page import="java.util.Set"%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
+
+<html class=" js no-touch csstransitions">
+<head>
+	<%@include file="_components/head.jsp" %>
+</head>
+<body class="login no-animation">
 <%
 	response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
 	response.setHeader("Pragma", "no-cache");
@@ -23,69 +25,71 @@
 		if (p != null) {
 			session.setAttribute("user", p);
 		} else {
+			
 		}
 	}
 %>
-<html>
-    <head>
-		<%@include file="keyComponents/_metroHead.jsp" %>
-        <title>Login</title>
-    </head>
-    <body class="metro">
-		<%
+<a href="" class="">
+
+<img style="max-height: 60%; margin-top: 15px;float: right" src="./js_files/logo.png" alt="logo"/>
+
+</a>
+<%
 			Person user = (Person) session.getAttribute("user");
 			if (user == null) {%>
-		
-	<div class="tile-area tile-area-dark">
-		<a class="tile bg-darkBlue" data-click="transform">
-			<div class="tile-content icon">
-				<span class="icon-user"></span>
-			</div>
-		</a>
-		<form action="" method="POST" class="form-signin" role="form">
-		<div class="input-control text size2">
-		<input type="text" name="user_id" class="form-control" placeholder="User Name" required autofocus/>
-		<button class="btn-clear"></button>
-		</div>
+<div id="login-container">
 
-		<div class="input-control password size2 ">
-		<input type="password" name="password" class="form-control" placeholder="Password" required/>
-		<button class="btn-reveal"></button>
-		</div>
-			<button type="submit" name="SignIn" value="SignIn" class="primary">Button</button>
-		</form>
-	</div>
-			
-			
-			
-		<!--div class="container">
-			<form action="" method="POST" class="form-signin" role="form">
-				
-				<input type="text" name="user_id" class="form-control" placeholder="User Name" required autofocus>
-				<input type="password" name="password" class="form-control" placeholder="Password" required>
-				<!--label class="checkbox">
-				  <input type="checkbox" value="remember-me"> Remember me
-				</label>
-				<button class="btn btn-lg btn-primary btn-block" type="submit" name="SignIn" value="SignIn">Sign in</button>
-			</form>
-		</div-->
-		<% } else {%>
-		<a href=".SignOut" >logout</a>
+<div class="tab-pane active" id="login-form-tab">
+<form action="" method="post" id="login-form" class="form-horizontal">
+<div class="form-group">
+<div class="col-xs-12">
+<div class="input-group">
+<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+<input type="text" id="login-email" name="user_id" class="form-control" placeholder="Email.." />
+</div>
+</div>
+</div>
+<div class="form-group">
+<div class="col-xs-12">
+<div class="input-group">
+<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+<input type="password" id="login-password" name="password" class="form-control" placeholder="Password.." />
+</div>
+</div>
+</div>
+<div class="form-group">
+<div class="col-xs-12 clearfix">
+<div class="pull-right">
+	<button type="submit" name="SignIn" value="SignIn" class="btn btn-success remove-margin">Login</button>
+</div>
+<div class="pull-left login-extra-check">
+</div>
+</div>
+</div>
+</form>
+</div>
+
+
+</div>
+<% } else {%>
 		<%
 				// if admin
 				if (user.getClass().equals(Admin.class)) {
-					response.sendRedirect("home.jsp");
+					response.sendRedirect("flatAPP/home.jsp");
 				}
 				// if faculty
 				if (user.getClass().equals(Faculty.class)) {
-					response.sendRedirect("./home.jsp");
+					response.sendRedirect("flatAPP/home.jsp");
 				}
 
 				// if student
 				if (user.getClass().equals(Student.class)) {
-					response.sendRedirect("home.jsp");
+					response.sendRedirect("flatAPP/home.jsp");
 				}
 			}
 		%>
-    </body>
+	
+	
+	<%@include file="_components/javascripts.jsp" %>
+</body>
 </html>

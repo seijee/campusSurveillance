@@ -16,14 +16,14 @@ public class Admin extends Person {
 	private String  designation;
 	private String qualifications;
 	private Calendar join_date;
-	
+
 	public Admin(String designation, String qualifications, Calendar join_date, String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic) {
 		super(id, password, gender, father_name, mother_name, bloodgroup, p_address, r_address, mobile, email, type, photo, Name, DOB, groups, display_pic);
 		this.designation = designation;
 		this.qualifications = qualifications;
 		this.join_date = join_date;
 	}
-
+	
 	public Admin() {
 	}
 	

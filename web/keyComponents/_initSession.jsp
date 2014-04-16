@@ -8,4 +8,5 @@
 		return;
 	}
 	List<Group> alliedGroups = dao.GroupModule.getAlliedGroups(user);
+	
 %>

@@ -37,7 +37,9 @@ public class GroupServlet extends HttpServlet {
 				response.sendRedirect("group.jsp?gid="+ng.getGroup_id());
 			}else*/
 			if ("addMembers".equalsIgnoreCase(task)){
-				MemberAdder(request, response);
+				editMembers(request, response);
+				String gid = request.getParameter("gid");
+				response.sendRedirect("group.jsp?gid="+gid);
 			}
 		} finally {
 			out.close();
@@ -56,8 +58,9 @@ public class GroupServlet extends HttpServlet {
 		}
 		return group;
 	}*/
-	private static boolean MemberAdder (HttpServletRequest request, HttpServletResponse response) throws IOException{
+	private static boolean editMembers (HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String[] member_ids = request.getParameterValues("member_ids");
+		String[] remove_ids = request.getParameterValues("remove_id");
 		String gid = request.getParameter("gid");
 		Person user = (Person) request.getSession(false).getAttribute("user");
 		
@@ -70,8 +73,8 @@ public class GroupServlet extends HttpServlet {
 				out.println("group not found!");
 			}
 			GroupModule.addMembersToGroup(member_ids,g);
+			GroupModule.removeMembersFromGroup(remove_ids, g);
 		}
-		response.sendRedirect("group.jsp?gid="+gid);
 		return false;
 	}
 

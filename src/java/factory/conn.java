@@ -7,10 +7,6 @@ package factory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author SeiJee
- */
 public class conn {
 	private static SessionFactory sf;
 

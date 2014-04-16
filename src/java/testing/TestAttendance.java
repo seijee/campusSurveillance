@@ -30,12 +30,14 @@ public class TestAttendance {
 			r.setSeed((i++)*576);
 			//AttendanceReport ar = new AttendanceReport(per.getId(), r.nextInt(18), 20 ,begin , end, "fac306",((Student)per).getSemester());
 		
-			AttendanceReport ar =	new AttendanceReport( 
-					per.getId(), "Sub1", "fac301",
+			/*AttendanceReport ar =	new AttendanceReport( 
+					per.getId(), "Sub1", "fac301", 
 					r.nextInt(30),30 ,  r.nextInt(6), 6, per.getSemester()+7,
 					begin, end);
 			
 			dao.PunctualityModule.addNewAttendenceReport(ar); 
+			 * 
+			 */
 		}
 		for(Person per : members){
 			Float punct = dao.PunctualityModule.calculatePunctuality(per.getId(), 0);

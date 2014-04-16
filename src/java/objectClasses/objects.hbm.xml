@@ -6,6 +6,7 @@
     
       <property name="student"/>
       <property name="subject"/>
+	  <property name="group_id" />
       <property column="fromDate" name="fromDate" type="calendar_date"/>
       <property column="toDate" name="toDate" type="calendar_date"/>
     

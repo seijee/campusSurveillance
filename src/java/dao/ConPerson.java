@@ -11,7 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- *
+ *000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
  * @author SeiJee
  */
 public class ConPerson {
@@ -23,6 +23,7 @@ public class ConPerson {
 		Query q= session.createQuery("FROM Person WHERE id=:id");
 		q.setParameter("id", id);
 		List l = q.list();
+		
 		if (!l.isEmpty()){
 			s= (Person) l.get(0);
 		}

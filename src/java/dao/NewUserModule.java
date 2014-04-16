@@ -17,6 +17,23 @@ import org.hibernate.Transaction;
 public class NewUserModule {
 	private static SessionFactory sf = conn.getSf();
 	
+	public static boolean savePerson (objectClasses.people.Person p){
+		Session session = sf.openSession();
+		Transaction t=null;
+		try {
+			t = session.beginTransaction();
+			session.saveOrUpdate(p);
+			t.commit();
+		}catch(Exception e){
+			t.rollback();
+			return false;
+		}
+		finally{
+			session.close();
+		}
+		return true;
+	}
+	
 	public static boolean SaveAdmin(objectClasses.people.Admin newAdmin){
 		Session session = sf.openSession();
 		Transaction t=null;
@@ -68,6 +85,7 @@ public class NewUserModule {
 	}
 	public static boolean addNewStudentBatch(List<objectClasses.people.Student> studenList)
 	
+			
 	{
 		//implements batch processing, which is faster
 		//should work well with save, may crash with update operations.

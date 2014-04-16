@@ -16,11 +16,11 @@ public class Person {
 	protected String id, password;
 	protected String gender,father_name, mother_name, bloodgroup,
 	p_address, r_address, mobile,email, type, photo,Name;
-	protected Calendar DOB;
+	protected Calendar DOB, lastseen;
 	protected List<Group> groups;
 	public String display_pic;
 
-	public Person(String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic) {
+	public Person(String id, String password, String gender, String father_name, String mother_name, String bloodgroup, String p_address, String r_address, String mobile, String email, String type, String photo, String Name, Calendar DOB, List<Group> groups, String display_pic ) {
 		this.id = id;
 		this.password = password;
 		this.gender = gender;
@@ -37,6 +37,7 @@ public class Person {
 		this.DOB = DOB;
 		this.groups = groups;
 		this.display_pic = display_pic;
+		this.lastseen = null;
 	}
 
 	public Person() {
@@ -85,7 +86,6 @@ public class Person {
 	}
 
 
-
 	public String getFather_name() {
 		return father_name;
 	}
@@ -110,6 +110,13 @@ public class Person {
 		this.id = id;
 	}
 
+	public Calendar getLastseen() {
+		return lastseen;
+	}
+
+	public void setLastseen(Calendar lastseen) {
+		this.lastseen = lastseen;
+	}
 
 
 	public String getMobile() {

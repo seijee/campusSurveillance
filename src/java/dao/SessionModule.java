@@ -25,23 +25,23 @@ public class SessionModule {
 		Person p=null;
 		Query query=null;
 		Session session = sf.openSession();
-		if ("root".equals(uid) && "init".equals(pw)){
-			p =new Admin("master", "isowner", null, "root", "init", null, null, null, null, null, null, null, null, "admin", "default.jpg", "rootAdmin", null, null, "notShared.jpg");
-			p.setId("root");
-			p.setName("rootAdmin");
-			p.setPassword("init");
-			dao.NewUserModule.SaveAdmin((Admin)p);
-		}else{
-			/*q = "FROM Person WHERE id = :uid AND password=:pw";
-			query = session.createQuery(q);
-			query.setParameter("uid", uid);
-			query.setParameter("pw", pw);*/
-
-			p = dao.ConPerson.getPerson(uid);
-			if (p!=null)
-			if (!pw.equals(p.getPassword())){
-				p=null;
+		p = dao.ConPerson.getPerson(uid);
+		
+		if (p==null){
+			//hardcoded root admin
+			if ("root".equals(uid) && "init".equals(pw)){
+				p =new Admin("master", "isowner", null, "root", "init", null, null, null, null, null, null, null, null, "admin", "default.jpg", "rootAdmin", null, null, "notShared.jpg");
+				p.setId("root");
+				p.setName("rootAdmin");
+				p.setPassword("init");
+				dao.NewUserModule.SaveAdmin((Admin)p);
 			}
+		}else if (!pw.equals(p.getPassword())){ 
+			p=null; 
+		}else{
+			System.out.println(p.getName()+"["+p.getId()+"] logged in!\n");
+			p.setLastseen(Calendar.getInstance());
+			dao.NewUserModule.savePerson(p);
 		}
 		return p;
 	}

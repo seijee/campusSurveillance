@@ -137,9 +137,38 @@ public class GroupModule {
 			session.close();
 			return true;
 		}
-			
 		
 	}
+	public static boolean removeMembersFromGroup (String[] id,Group group){
+		Session session = sf.openSession();
+		Transaction t = null;
+		
+		
+		try {
+			Query query;
+			t = session.beginTransaction();
+			int count =0;
+			for (String sid : id ){
+				System.out.println("Removing "+sid);
+				query = session.createSQLQuery("DELETE FROM people_group WHERE group_id = ? && person_id = ? ");
+				query.setLong(0, group.getGroup_id());
+				query.setString(1, sid);
+				query.executeUpdate();
+				if ((count++)%100==0){
+					session.flush();
+					session.clear();
+				}
+			}
+			t.commit();
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			//this.people = reallyNew;
+			session.close();
+			return true;
+		}
+	}
+	
 	public static List<String> getMemberNames(Group group){
 		//Tested Working!
 		List<String> members=null;
@@ -220,6 +249,18 @@ public class GroupModule {
 		Query q = session.createQuery("SELECT DISTINCT g FROM Group g join g.people p "
 				+ "WHERE p.id =:id");
 		q.setParameter("id", pid);
+		List<Group> groups = q.list();
+		
+		session.close();
+		return groups;
+	}
+	public static List<Group> getGroups(String pid, String type){
+		//get all the Primary groups of which a person has got MEMBERSHIP
+		Session session = sf.openSession();
+		Query q = session.createQuery("SELECT DISTINCT g FROM Group g join g.people p "
+				+ "WHERE p.id =:id and g.type=:type");
+		q.setParameter("id", pid);
+		q.setParameter("type", type);
 		List<Group> groups = q.list();
 		
 		session.close();

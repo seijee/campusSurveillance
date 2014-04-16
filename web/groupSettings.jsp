@@ -13,7 +13,6 @@
 		<div class="container"><h4>Unauthorized access</h4></div>
 		<% } else {%>
 		<div class="container-fluid" >
-			
 			<div class="row-fluid">	
 				<div class="span9 affix" style="margin-left: 0%; max-height: 80%; ">
 					<ul class="nav nav-pills">

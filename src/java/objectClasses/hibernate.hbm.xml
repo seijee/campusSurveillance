@@ -17,6 +17,7 @@
     <property name="p_address" length="128"/>
     <property name="r_address" length="128"/>
     <property column="type" name="type" length="16"/>
+	<property name="lastseen" type="calendar" />
     <joined-subclass name="objectClasses.people.Admin" table="administration">
       <key column="admin_id" />
       <property column="qualifications" name="qualifications" length="12"/>

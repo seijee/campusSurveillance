@@ -27,11 +27,11 @@ public class DeleteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			String task = request.getParameter("submit");
-			out.print(task);
 			if ("deleteGroup".equalsIgnoreCase(task)){
 				groupDeleter(request, response);
+				response.sendRedirect("groups.jsp");
 			}
-		} finally {			
+		} finally {	
 			out.close();
 		}
 	}

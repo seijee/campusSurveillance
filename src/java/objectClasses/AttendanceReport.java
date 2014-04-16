@@ -15,11 +15,14 @@ public class AttendanceReport implements Serializable{
 	private String  student, subject, updatedBy;
 	private int id,thAttended, thTotal,lbsAttended ,lbsTotal,forSemester;
 	private Calendar fromDate,toDate, updatedOn;
+	private String group_id;
+	
+	
 
 	public AttendanceReport() {
 	}
 
-	public AttendanceReport( String student, String subject, String updatedBy,
+	/*public AttendanceReport( String student, String subject, String updatedBy,
 	int thAttended, int thTotal, int lbsAttended, int lbsTotal, int semester, 
 	Calendar fromDate, Calendar toDate) {
 		this.student = student;
@@ -33,8 +36,34 @@ public class AttendanceReport implements Serializable{
 		this.toDate = toDate;
 		this.updatedOn = Calendar.getInstance();
 		this.updatedBy = updatedBy;
+	}*/
+
+	public AttendanceReport(String student, String subject, String updatedBy, 
+	String forGroup, int thAttended, int thTotal, int lbsAttended, int lbsTotal, int forSemester, 
+	Calendar fromDate, Calendar toDate) {
+		this.student = student;
+		this.subject = subject;
+		this.updatedBy = updatedBy;
+		this.group_id = forGroup;
+		this.thAttended = thAttended;
+		this.thTotal = thTotal;
+		this.lbsAttended = lbsAttended;
+		this.lbsTotal = lbsTotal;
+		this.forSemester = forSemester;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.updatedOn = Calendar.getInstance();
 	}
-	
+
+	public String getGroup_id() {
+		return group_id;
+	}
+
+	public void setGroup_id(String group_id) {
+		this.group_id = group_id;
+	}
+
+
 	
 	@Override
 	public String toString() {

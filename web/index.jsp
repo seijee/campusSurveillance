@@ -28,27 +28,47 @@
 %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link type="text/css" href="./css/bootstrap3.css" rel="stylesheet" />
-		<link type="text/css" href="./css/login.css" rel="stylesheet" />
+		<%@include file="keyComponents/_metroHead.jsp" %>
         <title>Login</title>
     </head>
-    <body>
+    <body class="metro">
 		<%
 			Person user = (Person) session.getAttribute("user");
 			if (user == null) {%>
+		
+	<div class="tile-area tile-area-dark">
+		<a class="tile bg-darkBlue" data-click="transform">
+			<div class="tile-content icon">
+				<span class="icon-user"></span>
+			</div>
+		</a>
+		<form action="" method="POST" class="form-signin" role="form">
+		<div class="input-control text size2">
+		<input type="text" name="user_id" class="form-control" placeholder="User Name" required autofocus/>
+		<button class="btn-clear"></button>
+		</div>
 
-		<div class="container">
+		<div class="input-control password size2 ">
+		<input type="password" name="password" class="form-control" placeholder="Password" required/>
+		<button class="btn-reveal"></button>
+		</div>
+			<button type="submit" name="SignIn" value="SignIn" class="primary">Button</button>
+		</form>
+	</div>
+			
+			
+			
+		<!--div class="container">
 			<form action="" method="POST" class="form-signin" role="form">
-				<h2 class="form-signin-heading">Sign in</h2>
+				
 				<input type="text" name="user_id" class="form-control" placeholder="User Name" required autofocus>
 				<input type="password" name="password" class="form-control" placeholder="Password" required>
 				<!--label class="checkbox">
 				  <input type="checkbox" value="remember-me"> Remember me
-				</label-->
+				</label>
 				<button class="btn btn-lg btn-primary btn-block" type="submit" name="SignIn" value="SignIn">Sign in</button>
 			</form>
-		</div>
+		</div-->
 		<% } else {%>
 		<a href=".SignOut" >logout</a>
 		<%

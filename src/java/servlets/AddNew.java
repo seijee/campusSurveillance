@@ -241,7 +241,7 @@ public class AddNew extends HttpServlet {
 		Calendar cal = null;
 		try {	
 			System.out.println(date);
-				Date d = new SimpleDateFormat("yyyy'-'MMM'-'dd").parse(date);
+				Date d = new SimpleDateFormat("yyyy'-'MM'-'dd").parse(date);
 				cal = new GregorianCalendar();
 				cal.setTime(d);
 				System.out.println(cal.toString());
@@ -261,11 +261,12 @@ public class AddNew extends HttpServlet {
 			String[] practical_s = request.getParameterValues("practicalAttendance");
 			int maxTheory = Integer.parseInt(request.getParameter("maxTheory"));
 			int maxLabs = Integer.parseInt(request.getParameter("maxLabs"));
-			String subject =  "default"; //request.getParameter("subject");
+			String subject = request.getParameter("subject");
 			String from_date = request.getParameter("from_date");
 			String to_date = request.getParameter("to_date");
 			Calendar from = extractDate(from_date);
 			Calendar to = extractDate(from_date);
+			String gid = request.getParameter("gid");
 			
 			
 			Person user = (Person) request.getSession(false).getAttribute("user");
@@ -275,7 +276,9 @@ public class AddNew extends HttpServlet {
 				String id = id_s[i];
 				int theoryAttendance = Integer.parseInt(theory_s[i]);
 				int labAttendance = Integer.parseInt(practical_s[i]);
-				report = new AttendanceReport(id, subject, user.getId(), theoryAttendance, maxTheory, labAttendance, maxLabs, i, from, to); 
+				Student s = (Student)dao.ConPerson.getPerson(id);
+				report = new AttendanceReport(id, subject, user.getId(), gid, theoryAttendance, maxTheory, labAttendance, maxLabs, s.getSemester(), from, to);
+				
 				reports.add(report);
 				added = dao.PunctualityModule.addNewAttendenceReport(report);
 			}
